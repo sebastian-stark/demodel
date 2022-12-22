@@ -124,7 +124,7 @@ public:
 };
 
 /**
- * Implementation of the electrostatic free energy function \f$\rho_0 \Psi^\mathrm{elec} = \dfrac{1}{2\epsilon} E_i F^{-1}_{ik} F^{-1}_{jk} E_j \f$,
+ * Implementation of the electrostatic free energy function \f$\rho_0 \Psi^\mathrm{elec} = -\dfrac{1}{2\epsilon} E_i F^{-1}_{ik} F^{-1}_{jk} E_j \f$,
  * where \f$F_{kl}\f$ is unsymmetric, and \f$\epsilon>0\f$ is a material parameter.
  *
  * Order of arguments:<br>	[0]	 \f$E_{1}\f$<br>
@@ -180,6 +180,76 @@ public:
 	override
 	final;
 };
+
+/**
+ * Implementation of the elastic surface free energy function \f$\rho_0 \Psi^\mathrm{surf} = \dfrac{1}{8} \lambda^\mathrm{S} ( C^\mathrm{S}_{kk} - 2)^2 + \dfrac{1}{4} \mu^\mathrm{S} ( C^\mathrm{S}_{ki}C^\mathrm{S}_{ik} - 2 C^\mathrm{S}_{kk} + 2) \f$,
+ * where \f$C^\mathrm{S}_{kl} = F^\mathrm{S}_{ik} F^\mathrm{S}_{il}\f$, and \f$F^\mathrm{S}_{kl} = u^\mathrm{S}_{k,l} + \delta_{kl}- n_k n_l\f$. In the latter formula, \f$u^\mathrm{S}_{k,l}\f$ is the surface gradient of the vector field \f$u^\mathrm{S}_k\f$, which is defined on a surface.
+ * Furthermore, \f$n_k\f$ is the outward normal vector on the surface.
+ *
+ * Order of arguments:<br>	[0] \f$u^\mathrm{S}_{1,1}\f$<br>
+ * 							[1] \f$u^\mathrm{S}_{1,2}\f$<br>
+ * 							[2] \f$u^\mathrm{S}_{1,3}\f$<br>
+ * 							[3] \f$u^\mathrm{S}_{2,1}\f$<br>
+ * 							[4] \f$u^\mathrm{S}_{2,2}\f$<br>
+ * 							[5] \f$u^\mathrm{S}_{2,3}\f$<br>
+ * 							[6] \f$u^\mathrm{S}_{3,1}\f$<br>
+ * 							[7] \f$u^\mathrm{S}_{3,2}\f$<br>
+ * 							[8] \f$u^\mathrm{S}_{3,3}\f$
+ *
+ * Order of parameters:<br>	[0] \f$n_{1}\f$<br>
+ * 							[1] \f$n_{2}\f$<br>
+ * 							[2] \f$n_{3}\f$<br>
+ */
+class PsiSurf : public CMF::ScalarFunction<double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>
+{
+
+private:
+
+	/**
+	 * Material parameter
+	 */
+	const double
+	lambda_S;
+
+	/**
+	 * Material parameter
+	 */
+	const double
+	mu_S;
+
+public:
+
+	/**
+	 * Constructor.
+	 *
+	 * @param[in]	argument_set	The names of the arguments
+	 *
+	 * @param[in]	parameter_set	The names of the parameters
+	 *
+	 * @param[in]	lambda_S		The material parameter \f$\lambda^\mathrm{S}\f$
+	 *
+	 * @param[in]	mu_S			The material parameter \f$\mu^\mathrm{S}\f$
+	 *
+	 */
+	PsiSurf(const CMF::VariableSet	argument_set,
+			const CMF::VariableSet	parameter_set,
+			const double			lambda_S,
+			const double			mu_S);
+
+	/**
+	 * See CMF::Function::compute()
+	 */
+	bool
+	compute(double&				value,
+			Eigen::VectorXd&	gradient,
+			Eigen::MatrixXd&	hessian,
+			const bool			update_value,
+			const bool			update_gradient,
+			const bool			update_hessian)
+	override
+	final;
+};
+
 
 
 }

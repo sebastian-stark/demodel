@@ -1,53 +1,57 @@
 clear;
 
 function eq = replace_pow_2(eq)
-  eq = regexprep (eq, 'pow\((\w+), 2\)', '($1*$1)');
-endfunction
+%eq = regexprep (eq, 'pow\((a\d1 \+ grad_u\d1), 2\)', '($1*$1)');
+eq = regexprep (eq, 'pow\(((?:[^)(]|\((?:[^)(]|\((?:[^)(]|\([^)(]*\))*\))*\))*), 2\)', '(($1)*($1))');
+eq = regexprep (eq, 'pow\(((?:[^)(]|\((?:[^)(]|\((?:[^)(]|\([^)(]*\))*\))*\))*), 2\)', '(($1)*($1))');
 
-##function eq = replace_not_supported_strings(eq, str)
-##  eq = regexprep (eq, '// Not supported in C:\n', '');
-##endfunction
+
+##  eq = regexprep (eq, 'pow\((n\d1), 2\)', '($1*$1)');
+##  eq = regexprep (eq, '  pow\((grad_u\d1 - \(n\d1\*n\d1\) + 1), 2\)', '($1*$1)');
+##  grad_u11 - (n11*n11) + 1, 2
+##  
+##  eq = regexprep (eq, 'pow\((.+), 2\)', '($1*$1)');
+
+endfunction
 
 pkg load symbolic;
 
-syms Ji;
-E_te = sym('E_te', [6 1]);
-syms Ji_mu(Ji);
-syms Ji_lambda(Ji);
-syms epsT(Ji);
+syms mu_S lambda_S;
+grad_u = sym('grad_u', [9 1]);
+n = sym('n', [3 1]);
+a = sym('a', [6 1]);
+q = [grad_u];
+grad_u_M = [grad_u(1) grad_u(2) grad_u(3);
+            grad_u(4) grad_u(5) grad_u(6);
+            grad_u(7) grad_u(8) grad_u(9)];
+            
+a = [a(1) a(4) a(6);
+     a(4) a(2) a(5);
+     a(6) a(5) a(3)];
 
-eps_el = E_te - [epsT;epsT;epsT;0;0;0];
-
-C=[2*Ji_mu+Ji_lambda Ji_lambda Ji_lambda 0 0 0;
-   Ji_lambda 2*Ji_mu+Ji_lambda Ji_lambda 0 0 0;
-   Ji_lambda Ji_lambda 2*Ji_mu+Ji_lambda 0 0 0;
-   0 0 0 Ji_mu 0 0;
-   0 0 0 0 Ji_mu 0;
-   0 0 0 0 0 Ji_mu];
-              
-Psi = simplify(sym(1)/sym(2) * transpose(eps_el) * C * eps_el);
-disp(["value = " replace_expr(ccode(simplify(Psi))) ";"]);
+F_S = grad_u_M + a;
+C_S = transpose(F_S)*F_S;
+tr_C_S = trace(C_S);
+tr_C_S_2 = trace(C_S*C_S);
+    
+Psi = (1/sym(8)*lambda_S*(tr_C_S-2)*(tr_C_S-2) + 1/sym(4)*mu_S*(tr_C_S_2-2*tr_C_S + 2));
+disp(["value = " replace_pow_2(ccode(simplify(Psi))) ";"]);
 
 disp(" ");
 
-for i=1:6
-  dPsi_dE_te(i) = diff(Psi, E_te(i,1));
-  disp(["gradient(" num2str(i-1) ") = " replace_expr(ccode(simplify(dPsi_dE_te(i)))) ";"]);
+for i=1:9
+  dPsi_dq(i) = diff(Psi, q(i,1));
+  disp(["gradient(" num2str(i-1) ") = " replace_pow_2(ccode(simplify(dPsi_dq(i)))) ";"]);
 endfor
-dPsi_dJi = diff(Psi, Ji);
-disp(["gradient(6) = " replace_expr(ccode(simplify(dPsi_dJi))) ";"]);
 
 disp(" ");
 
-for i=1:6
- for j=1:6
-  d2Psi_dE_te2(i,j) = diff(dPsi_dE_te(i), E_te(j,1));
-  disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " replace_expr(ccode(simplify(d2Psi_dE_te2(i,j)))) ";"]);
+for i=1:9
+ for j=i:9
+  if(i == j)
+   disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " replace_pow_2(ccode(simplify(diff(dPsi_dq(i), q(j,1))))) ";"]);
+  else
+   disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " "hessian(" num2str(j-1) "," num2str(i-1) ") = " replace_pow_2(ccode(simplify(diff(dPsi_dq(i), q(j,1))))) ";"]);
+  endif
  endfor
 endfor
-for i=1:6
-  d2Psi_dEdJi(i) = diff(dPsi_dE_te(i), Ji);
-  disp(["hessian(" num2str(i-1) "," num2str(6) ") = hessian(" num2str(6) "," num2str(i-1) ") = " replace_expr(ccode(simplify(d2Psi_dEdJi(i)))) ";"]);
-endfor
-d2Psi_Ji2 = diff(dPsi_dJi, Ji);
-disp(["hessian(6,6) = " replace_expr(ccode(simplify(d2Psi_Ji2))) ";"]);

@@ -1,0 +1,114 @@
+\hypertarget{class_d_e_model_1_1_psi_surf}{}\doxysection{D\+E\+Model\+::Psi\+Surf Class Reference}
+\label{class_d_e_model_1_1_psi_surf}\index{DEModel::PsiSurf@{DEModel::PsiSurf}}
+
+
+{\ttfamily \#include $<$demodel.\+h$>$}
+
+
+
+Inheritance diagram for D\+E\+Model\+::Psi\+Surf\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_psi_surf__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for D\+E\+Model\+::Psi\+Surf\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_psi_surf__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_e_model_1_1_psi_surf_aaabfe2f3d27113bd0ac20089f95b6b75}{Psi\+Surf}} (const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ argument\+\_\+set}, const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ parameter\+\_\+set}, const double \mbox{\hyperlink{class_d_e_model_1_1_psi_surf_a0859fbbf2fef837add8721203c535406}{lambda\+\_\+S}}, const double \mbox{\hyperlink{class_d_e_model_1_1_psi_surf_a058a210c074802125d12a85c65ee14a6}{mu\+\_\+S}})
+\item 
+bool \mbox{\hyperlink{class_d_e_model_1_1_psi_surf_a74cc9d1789ef61668b541317412b6117}{compute}} (double \&value, Eigen\+::\+Vector\+Xd \&gradient, Eigen\+::\+Matrix\+Xd \&hessian, const bool update\+\_\+value, const bool update\+\_\+gradient, const bool update\+\_\+hessian) override final
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const double \mbox{\hyperlink{class_d_e_model_1_1_psi_surf_a0859fbbf2fef837add8721203c535406}{lambda\+\_\+S}}
+\item 
+const double \mbox{\hyperlink{class_d_e_model_1_1_psi_surf_a058a210c074802125d12a85c65ee14a6}{mu\+\_\+S}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the elastic surface free energy function $\rho_0 \Psi^\mathrm{surf} = \dfrac{1}{8} \lambda^\mathrm{S} ( C^\mathrm{S}_{kk} - 2)^2 + \dfrac{1}{4} \mu^\mathrm{S} ( C^\mathrm{S}_{ki}C^\mathrm{S}_{ik} - 2 C^\mathrm{S}_{kk} + 2) $, where $C^\mathrm{S}_{kl} = F^\mathrm{S}_{ik} F^\mathrm{S}_{il}$, and $F^\mathrm{S}_{kl} = u^\mathrm{S}_{k,l} + \delta_{kl}- n_k n_l$. In the latter formula, $u^\mathrm{S}_{k,l}$ is the surface gradient of the vector field $u^\mathrm{S}_k$, which is defined on a surface. Furthermore, $n_k$ is the outward normal vector on the surface.
+
+Order of arguments\+:~\newline
+ \mbox{[}0\mbox{]} $u^\mathrm{S}_{1,1}$~\newline
+ \mbox{[}1\mbox{]} $u^\mathrm{S}_{1,2}$~\newline
+ \mbox{[}2\mbox{]} $u^\mathrm{S}_{1,3}$~\newline
+ \mbox{[}3\mbox{]} $u^\mathrm{S}_{2,1}$~\newline
+ \mbox{[}4\mbox{]} $u^\mathrm{S}_{2,2}$~\newline
+ \mbox{[}5\mbox{]} $u^\mathrm{S}_{2,3}$~\newline
+ \mbox{[}6\mbox{]} $u^\mathrm{S}_{3,1}$~\newline
+ \mbox{[}7\mbox{]} $u^\mathrm{S}_{3,2}$~\newline
+ \mbox{[}8\mbox{]} $u^\mathrm{S}_{3,3}$
+
+Order of parameters\+:~\newline
+ \mbox{[}0\mbox{]} $n_{1}$~\newline
+ \mbox{[}1\mbox{]} $n_{2}$~\newline
+ \mbox{[}2\mbox{]} $n_{3}$~\newline
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_surf_aaabfe2f3d27113bd0ac20089f95b6b75}\label{class_d_e_model_1_1_psi_surf_aaabfe2f3d27113bd0ac20089f95b6b75}} 
+\index{DEModel::PsiSurf@{DEModel::PsiSurf}!PsiSurf@{PsiSurf}}
+\index{PsiSurf@{PsiSurf}!DEModel::PsiSurf@{DEModel::PsiSurf}}
+\doxysubsubsection{\texorpdfstring{PsiSurf()}{PsiSurf()}}
+{\footnotesize\ttfamily D\+E\+Model\+::\+Psi\+Surf\+::\+Psi\+Surf (\begin{DoxyParamCaption}\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{argument\+\_\+set,  }\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{parameter\+\_\+set,  }\item[{const double}]{lambda\+\_\+S,  }\item[{const double}]{mu\+\_\+S }\end{DoxyParamCaption})}
+
+Constructor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argument\+\_\+set} & The names of the arguments\\
+\hline
+\mbox{\texttt{ in}}  & {\em parameter\+\_\+set} & The names of the parameters\\
+\hline
+\mbox{\texttt{ in}}  & {\em lambda\+\_\+S} & The material parameter $\lambda^\mathrm{S}$\\
+\hline
+\mbox{\texttt{ in}}  & {\em mu\+\_\+S} & The material parameter $\mu^\mathrm{S}$ \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_surf_a74cc9d1789ef61668b541317412b6117}\label{class_d_e_model_1_1_psi_surf_a74cc9d1789ef61668b541317412b6117}} 
+\index{DEModel::PsiSurf@{DEModel::PsiSurf}!compute@{compute}}
+\index{compute@{compute}!DEModel::PsiSurf@{DEModel::PsiSurf}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily bool D\+E\+Model\+::\+Psi\+Surf\+::compute (\begin{DoxyParamCaption}\item[{double \&}]{value,  }\item[{Eigen\+::\+Vector\+Xd \&}]{gradient,  }\item[{Eigen\+::\+Matrix\+Xd \&}]{hessian,  }\item[{const bool}]{update\+\_\+value,  }\item[{const bool}]{update\+\_\+gradient,  }\item[{const bool}]{update\+\_\+hessian }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+See \textbf{ C\+M\+F\+::\+Function\+::compute()} 
+
+Implements \textbf{ Function$<$ double, Eigen\+::\+Vector\+Xd, Eigen\+::\+Matrix\+Xd, Eigen\+::\+Vector\+Xd, Eigen\+::\+Vector\+Xd $>$}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_surf_a0859fbbf2fef837add8721203c535406}\label{class_d_e_model_1_1_psi_surf_a0859fbbf2fef837add8721203c535406}} 
+\index{DEModel::PsiSurf@{DEModel::PsiSurf}!lambda\_S@{lambda\_S}}
+\index{lambda\_S@{lambda\_S}!DEModel::PsiSurf@{DEModel::PsiSurf}}
+\doxysubsubsection{\texorpdfstring{lambda\_S}{lambda\_S}}
+{\footnotesize\ttfamily const double D\+E\+Model\+::\+Psi\+Surf\+::lambda\+\_\+S\hspace{0.3cm}{\ttfamily [private]}}
+
+Material parameter \mbox{\Hypertarget{class_d_e_model_1_1_psi_surf_a058a210c074802125d12a85c65ee14a6}\label{class_d_e_model_1_1_psi_surf_a058a210c074802125d12a85c65ee14a6}} 
+\index{DEModel::PsiSurf@{DEModel::PsiSurf}!mu\_S@{mu\_S}}
+\index{mu\_S@{mu\_S}!DEModel::PsiSurf@{DEModel::PsiSurf}}
+\doxysubsubsection{\texorpdfstring{mu\_S}{mu\_S}}
+{\footnotesize\ttfamily const double D\+E\+Model\+::\+Psi\+Surf\+::mu\+\_\+S\hspace{0.3cm}{\ttfamily [private]}}
+
+Material parameter 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/sst/code/demodel/include/demodel/\mbox{\hyperlink{demodel_8h}{demodel.\+h}}\end{DoxyCompactItemize}

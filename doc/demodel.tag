@@ -12,6 +12,7 @@
     <class kind="class">DEModel::Transformationdi</class>
     <class kind="class">DEModel::PsiMech</class>
     <class kind="class">DEModel::PsiElec</class>
+    <class kind="class">DEModel::PsiSurf</class>
     <namespace>DEModel</namespace>
   </compound>
   <compound kind="class">
@@ -74,6 +75,39 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>DEModel::PsiSurf</name>
+    <filename>class_d_e_model_1_1_psi_surf.html</filename>
+    <base>CMF::ScalarFunction&lt; double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd &gt;</base>
+    <member kind="function">
+      <type></type>
+      <name>PsiSurf</name>
+      <anchorfile>class_d_e_model_1_1_psi_surf.html</anchorfile>
+      <anchor>aaabfe2f3d27113bd0ac20089f95b6b75</anchor>
+      <arglist>(const CMF::VariableSet argument_set, const CMF::VariableSet parameter_set, const double lambda_S, const double mu_S)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>compute</name>
+      <anchorfile>class_d_e_model_1_1_psi_surf.html</anchorfile>
+      <anchor>a74cc9d1789ef61668b541317412b6117</anchor>
+      <arglist>(double &amp;value, Eigen::VectorXd &amp;gradient, Eigen::MatrixXd &amp;hessian, const bool update_value, const bool update_gradient, const bool update_hessian) override final</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>const double</type>
+      <name>lambda_S</name>
+      <anchorfile>class_d_e_model_1_1_psi_surf.html</anchorfile>
+      <anchor>a0859fbbf2fef837add8721203c535406</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>const double</type>
+      <name>mu_S</name>
+      <anchorfile>class_d_e_model_1_1_psi_surf.html</anchorfile>
+      <anchor>a058a210c074802125d12a85c65ee14a6</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>DEModel::Transformationdi</name>
     <filename>class_d_e_model_1_1_transformationdi.html</filename>
     <base>CMF::VariableTransformFunction&lt; Eigen::VectorXd, Eigen::MatrixXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd &gt;</base>
@@ -97,6 +131,7 @@
     <filename>namespace_d_e_model.html</filename>
     <class kind="class">DEModel::PsiElec</class>
     <class kind="class">DEModel::PsiMech</class>
+    <class kind="class">DEModel::PsiSurf</class>
     <class kind="class">DEModel::Transformationdi</class>
   </compound>
   <compound kind="page">

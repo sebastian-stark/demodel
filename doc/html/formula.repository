@@ -47,3 +47,33 @@
 \_form#46:$F^{-1}_{31}$
 \_form#47:$F^{-1}_{32}$
 \_form#48:$F^{-1}_{33}$
+\_form#49:$\rho_0 \Psi^\mathrm{elec} = -\dfrac{1}{2\epsilon} E_i F^{-1}_{ik} F^{-1}_{jk} E_j $
+\_form#50:$\rho_0 \Psi^\mathrm{surf} = \dfrac{1}{8} \lambda^\mathrm{S} ( C^\mathrm{S}_{kk} - 2)^2 + \dfrac{1}{4} \mu^\mathrm{S} ( C^\mathrm{S}_{ki}C^\mathrm{S}_{ik} - 2 C^\mathrm{S}_{kk} + 2) $
+\_form#51:$C^\mathrm{S}_{kl} = F^\mathrm{S}_{ik} F^\mathrm{S}_{il}$
+\_form#52:$F^\mathrm{S}_{kl} = u^\mathrm{S}_{k,l} + \delta_{kl}- n_k n_l$
+\_form#53:$u^\mathrm{S}_{k,l}$
+\_form#54:$u^\mathrm{S}_k$
+\_form#55:$n_k$
+\_form#56:$u^\mathrm{S}_{11}$
+\_form#57:$u^\mathrm{S}_{12}$
+\_form#58:$u^\mathrm{S}_{13}$
+\_form#59:$u^\mathrm{S}_{21}$
+\_form#60:$u^\mathrm{S}_{22}$
+\_form#61:$u^\mathrm{S}_{23}$
+\_form#62:$u^\mathrm{S}_{31}$
+\_form#63:$u^\mathrm{S}_{32}$
+\_form#64:$u^\mathrm{S}_{33}$
+\_form#65:$n_{1}$
+\_form#66:$n_{2}$
+\_form#67:$n_{3}$
+\_form#68:$\lambda^\mathrm{S}$
+\_form#69:$\mu^\mathrm{S}$
+\_form#70:$u^\mathrm{S}_{1,1}$
+\_form#71:$u^\mathrm{S}_{1,2}$
+\_form#72:$u^\mathrm{S}_{1,3}$
+\_form#73:$u^\mathrm{S}_{2,1}$
+\_form#74:$u^\mathrm{S}_{2,2}$
+\_form#75:$u^\mathrm{S}_{2,3}$
+\_form#76:$u^\mathrm{S}_{3,1}$
+\_form#77:$u^\mathrm{S}_{3,2}$
+\_form#78:$u^\mathrm{S}_{3,3}$

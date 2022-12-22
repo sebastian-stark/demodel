@@ -1191,5 +1191,121 @@ PsiElec::compute(	double&		value,
 	return false;
 }
 
+/////////////
+// PsiSurf //
+/////////////
+
+PsiSurf::PsiSurf(	const VariableSet	argument_set,
+					const VariableSet	parameter_set,
+					const double		lambda_S,
+					const double		mu_S)
+:
+ScalarFunction<double, VectorXd, MatrixXd, VectorXd, VectorXd>(argument_set, parameter_set),
+lambda_S(lambda_S),
+mu_S(mu_S)
+{
+}
+
+bool
+PsiSurf::compute(	double&		value,
+					VectorXd&	gradient,
+					MatrixXd&	hessian,
+					const bool	update_value,
+					const bool	update_gradient,
+					const bool	update_hessian)
+{
+	const double n11 = get_parameters()[0];
+	const double n21 = get_parameters()[1];
+	const double n31 = get_parameters()[2];
+
+	const double a11 = 1.0 - n11*n11;
+	const double a21 = 1.0 - n21*n21;
+	const double a31 = 1.0 - n31*n31;
+	const double a41 = -n11 * n21;
+	const double a51 = -n21 * n31;
+	const double a61 = -n31 * n11;
+
+	const double grad_u11 = get_arguments()[0];
+	const double grad_u21 = get_arguments()[1];
+	const double grad_u31 = get_arguments()[2];
+	const double grad_u41 = get_arguments()[3];
+	const double grad_u51 = get_arguments()[4];
+	const double grad_u61 = get_arguments()[5];
+	const double grad_u71 = get_arguments()[6];
+	const double grad_u81 = get_arguments()[7];
+	const double grad_u91 = get_arguments()[8];
+
+	if(update_value)
+	{
+		value = (1.0/8.0)*lambda_S*((((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 +grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2)) - 1.0/4.0*mu_S*(2*((a11 + grad_u11)*(a11 + grad_u11)) + 2*((a21 + grad_u51)*(a21 + grad_u51)) + 2*((a31 + grad_u91)*(a31 + grad_u91)) + 2*((a41 + grad_u21)*(a41 + grad_u21)) + 2*((a41 + grad_u41)*(a41 + grad_u41)) + 2*((a51 + grad_u61)*(a51 + grad_u61)) + 2*((a51 + grad_u81)*(a51 + grad_u81)) + 2*((a61 + grad_u31)*(a61 + grad_u31)) + 2*((a61 + grad_u71)*(a61 + grad_u71)) - 2*(((a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71))*((a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71))) - 2*(((a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61))*((a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61))) - 2*(((a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31))*((a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31))) - ((((a11 + grad_u11)*(a11 + grad_u11)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a61 + grad_u71)*(a61 + grad_u71)))*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a61 + grad_u71)*(a61 + grad_u71)))) - ((((a21 + grad_u51)*(a21 + grad_u51)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a51 + grad_u81)*(a51 + grad_u81)))*(((a21 + grad_u51)*(a21 + grad_u51)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a51 + grad_u81)*(a51 + grad_u81)))) - ((((a31 + grad_u91)*(a31 + grad_u91)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a61 + grad_u31)*(a61 + grad_u31)))*(((a31 + grad_u91)*(a31 + grad_u91)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a61 + grad_u31)*(a61 + grad_u31)))) - 2);
+	}
+
+	if(update_gradient)
+	{
+		gradient.resize(9);
+		gradient(0) = (1.0/2.0)*lambda_S*(a11 + grad_u11)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(-a11 - grad_u11 + (a11 + grad_u11)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a61 + grad_u71)*(a61 + grad_u71))) + (a41 + grad_u21)*((a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71)) + (a61 + grad_u31)*((a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61)));
+		gradient(1) = (1.0/2.0)*lambda_S*(a41 + grad_u21)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(-a41 - grad_u21 + (a11 + grad_u11)*((a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71)) + (a41 + grad_u21)*(((a21 + grad_u51)*(a21 + grad_u51)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a51 + grad_u81)*(a51 + grad_u81))) + (a61 + grad_u31)*((a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31)));
+		gradient(2) = (1.0/2.0)*lambda_S*(a61 + grad_u31)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(-a61 - grad_u31 + (a11 + grad_u11)*((a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61)) + (a41 + grad_u21)*((a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31)) + (a61 + grad_u31)*(((a31 + grad_u91)*(a31 + grad_u91)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a61 + grad_u31)*(a61 + grad_u31))));
+		gradient(3) = (1.0/2.0)*lambda_S*(a41 + grad_u41)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(-a41 - grad_u41 + (a21 + grad_u51)*((a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71)) + (a41 + grad_u41)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a61 + grad_u71)*(a61 + grad_u71))) + (a51 + grad_u61)*((a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61)));
+		gradient(4) = (1.0/2.0)*lambda_S*(a21 + grad_u51)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(-a21 - grad_u51 + (a21 + grad_u51)*(((a21 + grad_u51)*(a21 + grad_u51)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a51 + grad_u81)*(a51 + grad_u81))) + (a41 + grad_u41)*((a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71)) + (a51 + grad_u61)*((a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31)));
+		gradient(5) = (1.0/2.0)*lambda_S*(a51 + grad_u61)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(-a51 - grad_u61 + (a21 + grad_u51)*((a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31)) + (a41 + grad_u41)*((a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61)) + (a51 + grad_u61)*(((a31 + grad_u91)*(a31 + grad_u91)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a61 + grad_u31)*(a61 + grad_u31))));
+		gradient(6) = (1.0/2.0)*lambda_S*(a61 + grad_u71)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(-a61 - grad_u71 + (a31 + grad_u91)*((a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61)) + (a51 + grad_u81)*((a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71)) + (a61 + grad_u71)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a61 + grad_u71)*(a61 + grad_u71))));
+		gradient(7) = (1.0/2.0)*lambda_S*(a51 + grad_u81)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(-a51 - grad_u81 + (a31 + grad_u91)*((a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31)) + (a51 + grad_u81)*(((a21 + grad_u51)*(a21 + grad_u51)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a51 + grad_u81)*(a51 + grad_u81))) + (a61 + grad_u71)*((a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71)));
+		gradient(8) = (1.0/2.0)*lambda_S*(a31 + grad_u91)*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(-a31 - grad_u91 + (a31 + grad_u91)*(((a31 + grad_u91)*(a31 + grad_u91)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a61 + grad_u31)*(a61 + grad_u31))) + (a51 + grad_u81)*((a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31)) + (a61 + grad_u71)*((a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61)));
+	}
+
+	if(update_hessian)
+	{
+		hessian.resize(9,9);
+		hessian(0,0) = lambda_S*((a11 + grad_u11)*(a11 + grad_u11)) + (1.0/2.0)*lambda_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(3*((a11 + grad_u11)*(a11 + grad_u11)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 1);
+		hessian(0,1) = hessian(1,0) = lambda_S*(a11 + grad_u11)*(a41 + grad_u21) + mu_S*(2*(a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71));
+		hessian(0,2) = hessian(2,0) = lambda_S*(a11 + grad_u11)*(a61 + grad_u31) + mu_S*(2*(a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61));
+		hessian(0,3) = hessian(3,0) = lambda_S*(a11 + grad_u11)*(a41 + grad_u41) + mu_S*(2*(a11 + grad_u11)*(a41 + grad_u41) + (a21 + grad_u51)*(a41 + grad_u21) + (a51 + grad_u61)*(a61 + grad_u31));
+		hessian(0,4) = hessian(4,0) = lambda_S*(a11 + grad_u11)*(a21 + grad_u51) + mu_S*(a41 + grad_u21)*(a41 + grad_u41);
+		hessian(0,5) = hessian(5,0) = lambda_S*(a11 + grad_u11)*(a51 + grad_u61) + mu_S*(a41 + grad_u41)*(a61 + grad_u31);
+		hessian(0,6) = hessian(6,0) = lambda_S*(a11 + grad_u11)*(a61 + grad_u71) + mu_S*(2*(a11 + grad_u11)*(a61 + grad_u71) + (a31 + grad_u91)*(a61 + grad_u31) + (a41 + grad_u21)*(a51 + grad_u81));
+		hessian(0,7) = hessian(7,0) = lambda_S*(a11 + grad_u11)*(a51 + grad_u81) + mu_S*(a41 + grad_u21)*(a61 + grad_u71);
+		hessian(0,8) = hessian(8,0) = lambda_S*(a11 + grad_u11)*(a31 + grad_u91) + mu_S*(a61 + grad_u31)*(a61 + grad_u71);
+		hessian(1,1) = lambda_S*((a41 + grad_u21)*(a41 + grad_u21)) + (1.0/2.0)*lambda_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + 3*((a41 + grad_u21)*(a41 + grad_u21)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) - 1);
+		hessian(1,2) = hessian(2,1) = lambda_S*(a41 + grad_u21)*(a61 + grad_u31) + mu_S*((a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + 2*(a41 + grad_u21)*(a61 + grad_u31));
+		hessian(1,3) = hessian(3,1) = lambda_S*(a41 + grad_u21)*(a41 + grad_u41) + mu_S*(a11 + grad_u11)*(a21 + grad_u51);
+		hessian(1,4) = hessian(4,1) = lambda_S*(a21 + grad_u51)*(a41 + grad_u21) + mu_S*((a11 + grad_u11)*(a41 + grad_u41) + 2*(a21 + grad_u51)*(a41 + grad_u21) + (a51 + grad_u61)*(a61 + grad_u31));
+		hessian(1,5) = hessian(5,1) = lambda_S*(a41 + grad_u21)*(a51 + grad_u61) + mu_S*(a21 + grad_u51)*(a61 + grad_u31);
+		hessian(1,6) = hessian(6,1) = lambda_S*(a41 + grad_u21)*(a61 + grad_u71) + mu_S*(a11 + grad_u11)*(a51 + grad_u81);
+		hessian(1,7) = hessian(7,1) = lambda_S*(a41 + grad_u21)*(a51 + grad_u81) + mu_S*((a11 + grad_u11)*(a61 + grad_u71) + (a31 + grad_u91)*(a61 + grad_u31) + 2*(a41 + grad_u21)*(a51 + grad_u81));
+		hessian(1,8) = hessian(8,1) = lambda_S*(a31 + grad_u91)*(a41 + grad_u21) + mu_S*(a51 + grad_u81)*(a61 + grad_u31);
+		hessian(2,2) = lambda_S*((a61 + grad_u31)*(a61 + grad_u31)) + (1.0/2.0)*lambda_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a51 + grad_u61)*(a51 + grad_u61)) + 3*((a61 + grad_u31)*(a61 + grad_u31)) - 1);
+		hessian(2,3) = hessian(3,2) = lambda_S*(a41 + grad_u41)*(a61 + grad_u31) + mu_S*(a11 + grad_u11)*(a51 + grad_u61);
+		hessian(2,4) = hessian(4,2) = lambda_S*(a21 + grad_u51)*(a61 + grad_u31) + mu_S*(a41 + grad_u21)*(a51 + grad_u61);
+		hessian(2,5) = hessian(5,2) = lambda_S*(a51 + grad_u61)*(a61 + grad_u31) + mu_S*((a11 + grad_u11)*(a41 + grad_u41) + (a21 + grad_u51)*(a41 + grad_u21) + 2*(a51 + grad_u61)*(a61 + grad_u31));
+		hessian(2,6) = hessian(6,2) = lambda_S*(a61 + grad_u31)*(a61 + grad_u71) + mu_S*(a11 + grad_u11)*(a31 + grad_u91);
+		hessian(2,7) = hessian(7,2) = lambda_S*(a51 + grad_u81)*(a61 + grad_u31) + mu_S*(a31 + grad_u91)*(a41 + grad_u21);
+		hessian(2,8) = hessian(8,2) = lambda_S*(a31 + grad_u91)*(a61 + grad_u31) + mu_S*((a11 + grad_u11)*(a61 + grad_u71) + 2*(a31 + grad_u91)*(a61 + grad_u31) + (a41 + grad_u21)*(a51 + grad_u81));
+		hessian(3,3) = lambda_S*((a41 + grad_u41)*(a41 + grad_u41)) + (1.0/2.0)*lambda_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + 3*((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 1);
+		hessian(3,4) = hessian(4,3) = lambda_S*(a21 + grad_u51)*(a41 + grad_u41) + mu_S*((a11 + grad_u11)*(a41 + grad_u21) + 2*(a21 + grad_u51)*(a41 + grad_u41) + (a51 + grad_u81)*(a61 + grad_u71));
+		hessian(3,5) = hessian(5,3) = lambda_S*(a41 + grad_u41)*(a51 + grad_u61) + mu_S*((a11 + grad_u11)*(a61 + grad_u31) + (a31 + grad_u91)*(a61 + grad_u71) + 2*(a41 + grad_u41)*(a51 + grad_u61));
+		hessian(3,6) = hessian(6,3) = lambda_S*(a41 + grad_u41)*(a61 + grad_u71) + mu_S*((a21 + grad_u51)*(a51 + grad_u81) + (a31 + grad_u91)*(a51 + grad_u61) + 2*(a41 + grad_u41)*(a61 + grad_u71));
+		hessian(3,7) = hessian(7,3) = lambda_S*(a41 + grad_u41)*(a51 + grad_u81) + mu_S*(a21 + grad_u51)*(a61 + grad_u71);
+		hessian(3,8) = hessian(8,3) = lambda_S*(a31 + grad_u91)*(a41 + grad_u41) + mu_S*(a51 + grad_u61)*(a61 + grad_u71);
+		hessian(4,4) = lambda_S*((a21 + grad_u51)*(a21 + grad_u51)) + (1.0/2.0)*lambda_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(3*((a21 + grad_u51)*(a21 + grad_u51)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) - 1);
+		hessian(4,5) = hessian(5,4) = lambda_S*(a21 + grad_u51)*(a51 + grad_u61) + mu_S*(2*(a21 + grad_u51)*(a51 + grad_u61) + (a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31));
+		hessian(4,6) = hessian(6,4) = lambda_S*(a21 + grad_u51)*(a61 + grad_u71) + mu_S*(a41 + grad_u41)*(a51 + grad_u81);
+		hessian(4,7) = hessian(7,4) = lambda_S*(a21 + grad_u51)*(a51 + grad_u81) + mu_S*(2*(a21 + grad_u51)*(a51 + grad_u81) + (a31 + grad_u91)*(a51 + grad_u61) + (a41 + grad_u41)*(a61 + grad_u71));
+		hessian(4,8) = hessian(8,4) = lambda_S*(a21 + grad_u51)*(a31 + grad_u91) + mu_S*(a51 + grad_u61)*(a51 + grad_u81);
+		hessian(5,5) = lambda_S*((a51 + grad_u61)*(a51 + grad_u61)) + (1.0/2.0)*lambda_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u41)*(a41 + grad_u41)) + 3*((a51 + grad_u61)*(a51 + grad_u61)) + ((a61 + grad_u31)*(a61 + grad_u31)) - 1);
+		hessian(5,6) = hessian(6,5) = lambda_S*(a51 + grad_u61)*(a61 + grad_u71) + mu_S*(a31 + grad_u91)*(a41 + grad_u41);
+		hessian(5,7) = hessian(7,5) = lambda_S*(a51 + grad_u61)*(a51 + grad_u81) + mu_S*(a21 + grad_u51)*(a31 + grad_u91);
+		hessian(5,8) = hessian(8,5) = lambda_S*(a31 + grad_u91)*(a51 + grad_u61) + mu_S*((a21 + grad_u51)*(a51 + grad_u81) + 2*(a31 + grad_u91)*(a51 + grad_u61) + (a41 + grad_u41)*(a61 + grad_u71));
+		hessian(6,6) = lambda_S*((a61 + grad_u71)*(a61 + grad_u71)) + (1.0/2.0)*lambda_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u81)*(a51 + grad_u81)) + 3*((a61 + grad_u71)*(a61 + grad_u71)) - 1);
+		hessian(6,7) = hessian(7,6) = lambda_S*(a51 + grad_u81)*(a61 + grad_u71) + mu_S*((a11 + grad_u11)*(a41 + grad_u21) + (a21 + grad_u51)*(a41 + grad_u41) + 2*(a51 + grad_u81)*(a61 + grad_u71));
+		hessian(6,8) = hessian(8,6) = lambda_S*(a31 + grad_u91)*(a61 + grad_u71) + mu_S*((a11 + grad_u11)*(a61 + grad_u31) + 2*(a31 + grad_u91)*(a61 + grad_u71) + (a41 + grad_u41)*(a51 + grad_u61));
+		hessian(7,7) = lambda_S*((a51 + grad_u81)*(a51 + grad_u81)) + (1.0/2.0)*lambda_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + 3*((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 1);
+		hessian(7,8) = hessian(8,7) = lambda_S*(a31 + grad_u91)*(a51 + grad_u81) + mu_S*((a21 + grad_u51)*(a51 + grad_u61) + 2*(a31 + grad_u91)*(a51 + grad_u81) + (a41 + grad_u21)*(a61 + grad_u31));
+		hessian(8,8) = lambda_S*((a31 + grad_u91)*(a31 + grad_u91)) + (1.0/2.0)*lambda_S*(((a11 + grad_u11)*(a11 + grad_u11)) + ((a21 + grad_u51)*(a21 + grad_u51)) + ((a31 + grad_u91)*(a31 + grad_u91)) + ((a41 + grad_u21)*(a41 + grad_u21)) + ((a41 + grad_u41)*(a41 + grad_u41)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 2) + mu_S*(3*((a31 + grad_u91)*(a31 + grad_u91)) + ((a51 + grad_u61)*(a51 + grad_u61)) + ((a51 + grad_u81)*(a51 + grad_u81)) + ((a61 + grad_u31)*(a61 + grad_u31)) + ((a61 + grad_u71)*(a61 + grad_u71)) - 1);
+	}
+
+	return false;
+}
+
 
 }
