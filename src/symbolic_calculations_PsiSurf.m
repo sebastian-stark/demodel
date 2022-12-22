@@ -1,17 +1,9 @@
 clear;
 
 function eq = replace_pow_2(eq)
-%eq = regexprep (eq, 'pow\((a\d1 \+ grad_u\d1), 2\)', '($1*$1)');
-eq = regexprep (eq, 'pow\(((?:[^)(]|\((?:[^)(]|\((?:[^)(]|\([^)(]*\))*\))*\))*), 2\)', '(($1)*($1))');
-eq = regexprep (eq, 'pow\(((?:[^)(]|\((?:[^)(]|\((?:[^)(]|\([^)(]*\))*\))*\))*), 2\)', '(($1)*($1))');
-
-
-##  eq = regexprep (eq, 'pow\((n\d1), 2\)', '($1*$1)');
-##  eq = regexprep (eq, '  pow\((grad_u\d1 - \(n\d1\*n\d1\) + 1), 2\)', '($1*$1)');
-##  grad_u11 - (n11*n11) + 1, 2
-##  
-##  eq = regexprep (eq, 'pow\((.+), 2\)', '($1*$1)');
-
+  while(length(strfind (eq, 'pow'))>0)
+    eq = regexprep (eq, 'pow\(((?:[^)(]|\((?:[^)(]|\((?:[^)(]|\([^)(]*\))*\))*\))*), 2\)', '(($1)*($1))');
+  endwhile
 endfunction
 
 pkg load symbolic;
@@ -28,6 +20,8 @@ grad_u_M = [grad_u(1) grad_u(2) grad_u(3);
 a = [a(1) a(4) a(6);
      a(4) a(2) a(5);
      a(6) a(5) a(3)];
+     
+
 
 F_S = grad_u_M + a;
 C_S = transpose(F_S)*F_S;

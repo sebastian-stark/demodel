@@ -1,0 +1,98 @@
+\hypertarget{class_d_e_model_1_1_delta_eta}{}\doxysection{D\+E\+Model\+::Delta\+Eta Class Reference}
+\label{class_d_e_model_1_1_delta_eta}\index{DEModel::DeltaEta@{DEModel::DeltaEta}}
+
+
+{\ttfamily \#include $<$demodel.\+h$>$}
+
+
+
+Inheritance diagram for D\+E\+Model\+::Delta\+Eta\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_delta_eta__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for D\+E\+Model\+::Delta\+Eta\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_delta_eta__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_e_model_1_1_delta_eta_ac071053a04dc5863ea99a1434ab45cf9}{Delta\+Eta}} (const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ argument\+\_\+set}, const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ parameter\+\_\+set}, const double \mbox{\hyperlink{class_d_e_model_1_1_delta_eta_ab82fe1f0fb2edf867f132a4b357da705}{eta}})
+\item 
+bool \mbox{\hyperlink{class_d_e_model_1_1_delta_eta_a0c71c9c2151ce7edf4cde3d51026e315}{compute}} (double \&value, Eigen\+::\+Vector\+Xd \&gradient, Eigen\+::\+Matrix\+Xd \&hessian, const bool update\+\_\+value, const bool update\+\_\+gradient, const bool update\+\_\+hessian) override final
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const double \mbox{\hyperlink{class_d_e_model_1_1_delta_eta_ab82fe1f0fb2edf867f132a4b357da705}{eta}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the dissipation function $\rho_0 \Delta^\eta = \eta d_{ij}d_{ij}$, where $\eta>0$ is a material parameter and $d_{ij}$ is symmetric.
+
+Order of arguments\+:~\newline
+ \mbox{[}0\mbox{]} $d^\mathrm{i}_{11}$~\newline
+ \mbox{[}1\mbox{]} $d^\mathrm{i}_{22}$~\newline
+ \mbox{[}2\mbox{]} $d^\mathrm{i}_{33}$~\newline
+ \mbox{[}3\mbox{]} $2 d^\mathrm{i}_{12}$~\newline
+ \mbox{[}4\mbox{]} $2 d^\mathrm{i}_{23}$~\newline
+ \mbox{[}5\mbox{]} $2 d^\mathrm{i}_{31}$~\newline
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_delta_eta_ac071053a04dc5863ea99a1434ab45cf9}\label{class_d_e_model_1_1_delta_eta_ac071053a04dc5863ea99a1434ab45cf9}} 
+\index{DEModel::DeltaEta@{DEModel::DeltaEta}!DeltaEta@{DeltaEta}}
+\index{DeltaEta@{DeltaEta}!DEModel::DeltaEta@{DEModel::DeltaEta}}
+\doxysubsubsection{\texorpdfstring{DeltaEta()}{DeltaEta()}}
+{\footnotesize\ttfamily D\+E\+Model\+::\+Delta\+Eta\+::\+Delta\+Eta (\begin{DoxyParamCaption}\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{argument\+\_\+set,  }\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{parameter\+\_\+set,  }\item[{const double}]{eta }\end{DoxyParamCaption})}
+
+Constructor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argument\+\_\+set} & The names of the arguments\\
+\hline
+\mbox{\texttt{ in}}  & {\em parameter\+\_\+set} & The names of the parameters\\
+\hline
+\mbox{\texttt{ in}}  & {\em eta} & Material parameter $\eta$ \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_delta_eta_a0c71c9c2151ce7edf4cde3d51026e315}\label{class_d_e_model_1_1_delta_eta_a0c71c9c2151ce7edf4cde3d51026e315}} 
+\index{DEModel::DeltaEta@{DEModel::DeltaEta}!compute@{compute}}
+\index{compute@{compute}!DEModel::DeltaEta@{DEModel::DeltaEta}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily bool D\+E\+Model\+::\+Delta\+Eta\+::compute (\begin{DoxyParamCaption}\item[{double \&}]{value,  }\item[{Eigen\+::\+Vector\+Xd \&}]{gradient,  }\item[{Eigen\+::\+Matrix\+Xd \&}]{hessian,  }\item[{const bool}]{update\+\_\+value,  }\item[{const bool}]{update\+\_\+gradient,  }\item[{const bool}]{update\+\_\+hessian }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+See \textbf{ C\+M\+F\+::\+Function\+::compute()} 
+
+Implements \textbf{ Function$<$ double, Eigen\+::\+Vector\+Xd, Eigen\+::\+Matrix\+Xd, Eigen\+::\+Vector\+Xd, Eigen\+::\+Vector\+Xd $>$}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_delta_eta_ab82fe1f0fb2edf867f132a4b357da705}\label{class_d_e_model_1_1_delta_eta_ab82fe1f0fb2edf867f132a4b357da705}} 
+\index{DEModel::DeltaEta@{DEModel::DeltaEta}!eta@{eta}}
+\index{eta@{eta}!DEModel::DeltaEta@{DEModel::DeltaEta}}
+\doxysubsubsection{\texorpdfstring{eta}{eta}}
+{\footnotesize\ttfamily const double D\+E\+Model\+::\+Delta\+Eta\+::eta\hspace{0.3cm}{\ttfamily [private]}}
+
+Material parameter 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/sst/code/demodel/include/demodel/\mbox{\hyperlink{demodel_8h}{demodel.\+h}}\end{DoxyCompactItemize}

@@ -77,3 +77,13 @@
 \_form#76:$u^\mathrm{S}_{3,1}$
 \_form#77:$u^\mathrm{S}_{3,2}$
 \_form#78:$u^\mathrm{S}_{3,3}$
+\_form#79:$\rho_0 \Delta^\eta = \eta d_{ij}d_{ij}$
+\_form#80:$\eta>0$
+\_form#81:$d_{ij}$
+\_form#82:$d^\mathrm{i}_{11}$
+\_form#83:$d^\mathrm{i}_{22}$
+\_form#84:$d^\mathrm{i}_{33}$
+\_form#85:$2 d^\mathrm{i}_{12}$
+\_form#86:$2 d^\mathrm{i}_{23}$
+\_form#87:$2 d^\mathrm{i}_{31}$
+\_form#88:$\eta$

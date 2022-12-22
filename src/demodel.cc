@@ -1307,5 +1307,80 @@ PsiSurf::compute(	double&		value,
 	return false;
 }
 
+//////////////
+// DeltaEta //
+//////////////
+
+DeltaEta::DeltaEta(	const VariableSet	argument_set,
+					const VariableSet	parameter_set,
+					const double		eta)
+:
+ScalarFunction<double, VectorXd, MatrixXd, VectorXd, VectorXd>(argument_set, parameter_set),
+eta(eta)
+{
+}
+
+bool
+DeltaEta::compute(	double&		value,
+					VectorXd&	gradient,
+					MatrixXd&	hessian,
+					const bool	update_value,
+					const bool	update_gradient,
+					const bool	update_hessian)
+{
+	const double di11 = get_arguments()[0];
+	const double di21 = get_arguments()[1];
+	const double di31 = get_arguments()[2];
+	const double di41 = get_arguments()[3];
+	const double di51 = get_arguments()[4];
+	const double di61 = get_arguments()[5];
+
+	if(update_value)
+	{
+		value = (1.0/2.0)*eta*(2*((di11)*(di11)) + 2*((di21)*(di21)) + 2*((di31)*(di31)) + ((di41)*(di41)) + ((di51)*(di51)) + ((di61)*(di61)));
+	}
+
+
+	if(update_gradient)
+	{
+		gradient.resize(6);
+		gradient(0) = 2*di11*eta;
+		gradient(1) = 2*di21*eta;
+		gradient(2) = 2*di31*eta;
+		gradient(3) = di41*eta;
+		gradient(4) = di51*eta;
+		gradient(5) = di61*eta;
+	}
+
+	if(update_hessian)
+	{
+		hessian.resize(6,6);
+		hessian(0,0) = 2*eta;
+		hessian(0,1) = hessian(1,0) = 0;
+		hessian(0,2) = hessian(2,0) = 0;
+		hessian(0,3) = hessian(3,0) = 0;
+		hessian(0,4) = hessian(4,0) = 0;
+		hessian(0,5) = hessian(5,0) = 0;
+		hessian(1,1) = 2*eta;
+		hessian(1,2) = hessian(2,1) = 0;
+		hessian(1,3) = hessian(3,1) = 0;
+		hessian(1,4) = hessian(4,1) = 0;
+		hessian(1,5) = hessian(5,1) = 0;
+		hessian(2,2) = 2*eta;
+		hessian(2,3) = hessian(3,2) = 0;
+		hessian(2,4) = hessian(4,2) = 0;
+		hessian(2,5) = hessian(5,2) = 0;
+		hessian(3,3) = eta;
+		hessian(3,4) = hessian(4,3) = 0;
+		hessian(3,5) = hessian(5,3) = 0;
+		hessian(4,4) = eta;
+		hessian(4,5) = hessian(5,4) = 0;
+		hessian(5,5) = eta;
+	}
+
+	return false;
+}
+
+
 
 }

@@ -250,6 +250,59 @@ public:
 	final;
 };
 
+/**
+ * Implementation of the dissipation function \f$\rho_0 \Delta^\eta = \eta d_{ij}d_{ij}\f$,
+ * where \f$\eta>0\f$ is a material parameter and \f$d_{ij}\f$ is symmetric.
+ *
+ * Order of arguments:<br>	[0]	 \f$d^\mathrm{i}_{11}\f$<br>
+ * 							[1]	 \f$d^\mathrm{i}_{22}\f$<br>
+ * 							[2]	 \f$d^\mathrm{i}_{33}\f$<br>
+ * 							[3]	 \f$2 d^\mathrm{i}_{12}\f$<br>
+ * 							[4]	 \f$2 d^\mathrm{i}_{23}\f$<br>
+ * 							[5]	 \f$2 d^\mathrm{i}_{31}\f$<br>
+ */
+class DeltaEta : public CMF::ScalarFunction<double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>
+{
+
+private:
+
+	/**
+	 * Material parameter
+	 */
+	const double
+	eta;
+
+public:
+
+	/**
+	 * Constructor.
+	 *
+	 * @param[in]	argument_set	The names of the arguments
+	 *
+	 * @param[in]	parameter_set	The names of the parameters
+	 *
+	 * @param[in]	eta				Material parameter \f$\eta\f$
+	 *
+	 */
+	DeltaEta(	const CMF::VariableSet	argument_set,
+				const CMF::VariableSet	parameter_set,
+				const double			eta);
+
+	/**
+	 * See CMF::Function::compute()
+	 */
+	bool
+	compute(double&				value,
+			Eigen::VectorXd&	gradient,
+			Eigen::MatrixXd&	hessian,
+			const bool			update_value,
+			const bool			update_gradient,
+			const bool			update_hessian)
+	override
+	final;
+};
+
+
 
 
 }

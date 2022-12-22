@@ -13,7 +13,34 @@
     <class kind="class">DEModel::PsiMech</class>
     <class kind="class">DEModel::PsiElec</class>
     <class kind="class">DEModel::PsiSurf</class>
+    <class kind="class">DEModel::DeltaEta</class>
     <namespace>DEModel</namespace>
+  </compound>
+  <compound kind="class">
+    <name>DEModel::DeltaEta</name>
+    <filename>class_d_e_model_1_1_delta_eta.html</filename>
+    <base>CMF::ScalarFunction&lt; double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd &gt;</base>
+    <member kind="function">
+      <type></type>
+      <name>DeltaEta</name>
+      <anchorfile>class_d_e_model_1_1_delta_eta.html</anchorfile>
+      <anchor>ac071053a04dc5863ea99a1434ab45cf9</anchor>
+      <arglist>(const CMF::VariableSet argument_set, const CMF::VariableSet parameter_set, const double eta)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>compute</name>
+      <anchorfile>class_d_e_model_1_1_delta_eta.html</anchorfile>
+      <anchor>a0c71c9c2151ce7edf4cde3d51026e315</anchor>
+      <arglist>(double &amp;value, Eigen::VectorXd &amp;gradient, Eigen::MatrixXd &amp;hessian, const bool update_value, const bool update_gradient, const bool update_hessian) override final</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>const double</type>
+      <name>eta</name>
+      <anchorfile>class_d_e_model_1_1_delta_eta.html</anchorfile>
+      <anchor>ab82fe1f0fb2edf867f132a4b357da705</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="class">
     <name>DEModel::PsiElec</name>
@@ -129,6 +156,7 @@
   <compound kind="namespace">
     <name>DEModel</name>
     <filename>namespace_d_e_model.html</filename>
+    <class kind="class">DEModel::DeltaEta</class>
     <class kind="class">DEModel::PsiElec</class>
     <class kind="class">DEModel::PsiMech</class>
     <class kind="class">DEModel::PsiSurf</class>
