@@ -32,3 +32,18 @@
 \_form#31:$\mu^\mathrm{e}$
 \_form#32:$\mu^\mathrm{i}$
 \_form#33:$\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} F_{ij} F_{ij} + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} {U^\mathrm{i}}^{-1}_{mi} $
+\_form#34:$\rho_0 \Psi^\mathrm{elec} = \dfrac{1}{2\epsilon} E_i F^{-1}_{ik} F^{-1}_{jk} E_j $
+\_form#35:$\epsilon>0$
+\_form#36:$E_{1}$
+\_form#37:$E_{2}$
+\_form#38:$E_{3}$
+\_form#39:$\epsilon$
+\_form#40:$F^{-1}_{11}$
+\_form#41:$F^{-1}_{12}$
+\_form#42:$F^{-1}_{13}$
+\_form#43:$F^{-1}_{21}$
+\_form#44:$F^{-1}_{22}$
+\_form#45:$F^{-1}_{23}$
+\_form#46:$F^{-1}_{31}$
+\_form#47:$F^{-1}_{32}$
+\_form#48:$F^{-1}_{33}$

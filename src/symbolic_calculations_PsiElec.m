@@ -1,10 +1,6 @@
 clear;
 
-function eq = replace_expr(eq)
-  eq = regexprep (eq, '\/\/ .+\n', '');
-  eq = regexprep (eq, 'Derivative\((\w+)\(\w+\), \((\w+), (\w+)\)\)', 'd$3$1_d$2$3');
-  eq = regexprep (eq, 'Derivative\((\w+)\(\w+\), (\w+)\)', 'd$1_d$2');
-  eq = regexprep (eq, '\(Ji\)', '');
+function eq = replace_pow_2(eq)
   eq = regexprep (eq, 'pow\((\w+), 2\)', '($1*$1)');
 endfunction
 
@@ -14,44 +10,33 @@ endfunction
 
 pkg load symbolic;
 
-syms Ji;
-E_te = sym('E_te', [6 1]);
-syms Ji_mu(Ji);
-syms Ji_lambda(Ji);
-syms epsT(Ji);
+syms epsilon;
+E = sym('E', [3 1]);
+F_inv = sym('F_inv', [9 1]);
+q = [E; F_inv];
 
-eps_el = E_te - [epsT;epsT;epsT;0;0;0];
-
-C=[2*Ji_mu+Ji_lambda Ji_lambda Ji_lambda 0 0 0;
-   Ji_lambda 2*Ji_mu+Ji_lambda Ji_lambda 0 0 0;
-   Ji_lambda Ji_lambda 2*Ji_mu+Ji_lambda 0 0 0;
-   0 0 0 Ji_mu 0 0;
-   0 0 0 0 Ji_mu 0;
-   0 0 0 0 0 Ji_mu];
-              
-Psi = simplify(sym(1)/sym(2) * transpose(eps_el) * C * eps_el);
+F_inv_M = [F_inv(1) F_inv(2) F_inv(3);
+           F_inv(4) F_inv(5) F_inv(6);
+           F_inv(7) F_inv(8) F_inv(9);];
+    
+Psi = -simplify(1/sym(2)/epsilon * transpose(E) * F_inv_M * transpose(F_inv_M) * E );
 disp(["value = " replace_expr(ccode(simplify(Psi))) ";"]);
 
 disp(" ");
 
-for i=1:6
-  dPsi_dE_te(i) = diff(Psi, E_te(i,1));
-  disp(["gradient(" num2str(i-1) ") = " replace_expr(ccode(simplify(dPsi_dE_te(i)))) ";"]);
+for i=1:12
+  dPsi_dq(i) = diff(Psi, q(i,1));
+  disp(["gradient(" num2str(i-1) ") = " replace_expr(ccode(simplify(dPsi_dq(i)))) ";"]);
 endfor
-dPsi_dJi = diff(Psi, Ji);
-disp(["gradient(6) = " replace_expr(ccode(simplify(dPsi_dJi))) ";"]);
 
 disp(" ");
 
-for i=1:6
- for j=1:6
-  d2Psi_dE_te2(i,j) = diff(dPsi_dE_te(i), E_te(j,1));
-  disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " replace_expr(ccode(simplify(d2Psi_dE_te2(i,j)))) ";"]);
+for i=1:12
+ for j=i:12
+  if(i == j)
+   disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " replace_pow_2(ccode(simplify(diff(dPsi_dq(i), q(j,1))))) ";"]);
+  else
+   disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " "hessian(" num2str(j-1) "," num2str(i-1) ") = " replace_pow_2(ccode(simplify(diff(dPsi_dq(i), q(j,1))))) ";"]);
+  endif
  endfor
 endfor
-for i=1:6
-  d2Psi_dEdJi(i) = diff(dPsi_dE_te(i), Ji);
-  disp(["hessian(" num2str(i-1) "," num2str(6) ") = hessian(" num2str(6) "," num2str(i-1) ") = " replace_expr(ccode(simplify(d2Psi_dEdJi(i)))) ";"]);
-endfor
-d2Psi_Ji2 = diff(dPsi_dJi, Ji);
-disp(["hessian(6,6) = " replace_expr(ccode(simplify(d2Psi_Ji2))) ";"]);

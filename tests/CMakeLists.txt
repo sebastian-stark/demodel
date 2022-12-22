@@ -1,6 +1,7 @@
 # add new tests to this list
 LIST(APPEND TESTS	transformation_di_00
-					psi_mech_00)
+					psi_mech_00
+					psi_elec_00)
 
 FOREACH(TEST ${TESTS})
   ADD_EXECUTABLE(${TEST} ${TEST}.cc)

@@ -123,6 +123,64 @@ public:
 	final;
 };
 
+/**
+ * Implementation of the electrostatic free energy function \f$\rho_0 \Psi^\mathrm{elec} = \dfrac{1}{2\epsilon} E_i F^{-1}_{ik} F^{-1}_{jk} E_j \f$,
+ * where \f$F_{kl}\f$ is unsymmetric, and \f$\epsilon>0\f$ is a material parameter.
+ *
+ * Order of arguments:<br>	[0]	 \f$E_{1}\f$<br>
+ * 							[1]	 \f$E_{2}\f$<br>
+ * 							[2]	 \f$E_{3}\f$<br>
+ * 							[3]	 \f$F^{-1}_{11}\f$<br>
+ * 							[4]	 \f$F^{-1}_{12}\f$<br>
+ * 							[5]	 \f$F^{-1}_{13}\f$<br>
+ * 							[6]	 \f$F^{-1}_{21}\f$<br>
+ * 							[7]	 \f$F^{-1}_{22}\f$<br>
+ * 							[8]	 \f$F^{-1}_{23}\f$<br>
+ * 							[9]	 \f$F^{-1}_{31}\f$<br>
+ * 							[10] \f$F^{-1}_{32}\f$<br>
+ * 							[11] \f$F^{-1}_{33}\f$
+ */
+class PsiElec : public CMF::ScalarFunction<double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>
+{
+
+private:
+
+	/**
+	 * Material parameter
+	 */
+	const double
+	epsilon;
+
+public:
+
+	/**
+	 * Constructor.
+	 *
+	 * @param[in]	argument_set	The names of the arguments
+	 *
+	 * @param[in]	parameter_set	The names of the parameters
+	 *
+	 * @param[in]	epsilon			The material parameter \f$\epsilon\f$
+	 *
+	 */
+	PsiElec(const CMF::VariableSet	argument_set,
+			const CMF::VariableSet	parameter_set,
+			const double			epsilon);
+
+	/**
+	 * See CMF::Function::compute()
+	 */
+	bool
+	compute(double&				value,
+			Eigen::VectorXd&	gradient,
+			Eigen::MatrixXd&	hessian,
+			const bool			update_value,
+			const bool			update_gradient,
+			const bool			update_hessian)
+	override
+	final;
+};
+
 
 }
 

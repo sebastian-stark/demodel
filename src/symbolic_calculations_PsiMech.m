@@ -1,10 +1,6 @@
 clear;
 
-function eq = replace_expr(eq)
-  eq = regexprep (eq, '\/\/ .+\n', '');
-  eq = regexprep (eq, 'Derivative\((\w+)\(\w+\), \((\w+), (\w+)\)\)', 'd$3$1_d$2$3');
-  eq = regexprep (eq, 'Derivative\((\w+)\(\w+\), (\w+)\)', 'd$1_d$2');
-  eq = regexprep (eq, '\(Ji\)', '');
+function eq = replace_pow_2(eq)
   eq = regexprep (eq, 'pow\((\w+), 2\)', '($1*$1)');
 endfunction
 
@@ -41,7 +37,10 @@ disp(" ");
 
 for i=1:15
  for j=1:15
-  d2Psi_dq2(i,j) = diff(dPsi_dq(i), q(j,1));
-  disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " replace_expr(ccode(simplify(d2Psi_dq2(i,j)))) ";"]);
+  if(i == j)
+   disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " replace_pow_2(ccode(simplify(diff(dPsi_dq(i), q(j,1))))) ";"]);
+  else
+   disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " "hessian(" num2str(j-1) "," num2str(i-1) ") = " replace_pow_2(ccode(simplify(diff(dPsi_dq(i), q(j,1))))) ";"]);
+  endif
  endfor
 endfor

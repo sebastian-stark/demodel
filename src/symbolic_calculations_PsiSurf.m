@@ -1,10 +1,6 @@
 clear;
 
-function eq = replace_expr(eq)
-  eq = regexprep (eq, '\/\/ .+\n', '');
-  eq = regexprep (eq, 'Derivative\((\w+)\(\w+\), \((\w+), (\w+)\)\)', 'd$3$1_d$2$3');
-  eq = regexprep (eq, 'Derivative\((\w+)\(\w+\), (\w+)\)', 'd$1_d$2');
-  eq = regexprep (eq, '\(Ji\)', '');
+function eq = replace_pow_2(eq)
   eq = regexprep (eq, 'pow\((\w+), 2\)', '($1*$1)');
 endfunction
 

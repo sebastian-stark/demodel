@@ -11,7 +11,34 @@
     <filename>demodel_8h.html</filename>
     <class kind="class">DEModel::Transformationdi</class>
     <class kind="class">DEModel::PsiMech</class>
+    <class kind="class">DEModel::PsiElec</class>
     <namespace>DEModel</namespace>
+  </compound>
+  <compound kind="class">
+    <name>DEModel::PsiElec</name>
+    <filename>class_d_e_model_1_1_psi_elec.html</filename>
+    <base>CMF::ScalarFunction&lt; double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd &gt;</base>
+    <member kind="function">
+      <type></type>
+      <name>PsiElec</name>
+      <anchorfile>class_d_e_model_1_1_psi_elec.html</anchorfile>
+      <anchor>ac6ecad253c85c86d1edf2a2250a03383</anchor>
+      <arglist>(const CMF::VariableSet argument_set, const CMF::VariableSet parameter_set, const double epsilon)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>compute</name>
+      <anchorfile>class_d_e_model_1_1_psi_elec.html</anchorfile>
+      <anchor>a5a4d687fa704a99c079124f8d5c911d3</anchor>
+      <arglist>(double &amp;value, Eigen::VectorXd &amp;gradient, Eigen::MatrixXd &amp;hessian, const bool update_value, const bool update_gradient, const bool update_hessian) override final</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>const double</type>
+      <name>epsilon</name>
+      <anchorfile>class_d_e_model_1_1_psi_elec.html</anchorfile>
+      <anchor>ab10414e5752c90209d33c284bba5ae17</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="class">
     <name>DEModel::PsiMech</name>
@@ -68,6 +95,7 @@
   <compound kind="namespace">
     <name>DEModel</name>
     <filename>namespace_d_e_model.html</filename>
+    <class kind="class">DEModel::PsiElec</class>
     <class kind="class">DEModel::PsiMech</class>
     <class kind="class">DEModel::Transformationdi</class>
   </compound>

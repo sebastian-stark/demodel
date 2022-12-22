@@ -1,0 +1,101 @@
+\hypertarget{class_d_e_model_1_1_psi_elec}{}\doxysection{D\+E\+Model\+::Psi\+Elec Class Reference}
+\label{class_d_e_model_1_1_psi_elec}\index{DEModel::PsiElec@{DEModel::PsiElec}}
+
+
+{\ttfamily \#include $<$demodel.\+h$>$}
+
+
+
+Inheritance diagram for D\+E\+Model\+::Psi\+Elec\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_psi_elec__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for D\+E\+Model\+::Psi\+Elec\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_psi_elec__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_e_model_1_1_psi_elec_ac6ecad253c85c86d1edf2a2250a03383}{Psi\+Elec}} (const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ argument\+\_\+set}, const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ parameter\+\_\+set}, const double \mbox{\hyperlink{class_d_e_model_1_1_psi_elec_ab10414e5752c90209d33c284bba5ae17}{epsilon}})
+\item 
+bool \mbox{\hyperlink{class_d_e_model_1_1_psi_elec_a5a4d687fa704a99c079124f8d5c911d3}{compute}} (double \&value, Eigen\+::\+Vector\+Xd \&gradient, Eigen\+::\+Matrix\+Xd \&hessian, const bool update\+\_\+value, const bool update\+\_\+gradient, const bool update\+\_\+hessian) override final
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const double \mbox{\hyperlink{class_d_e_model_1_1_psi_elec_ab10414e5752c90209d33c284bba5ae17}{epsilon}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the electrostatic free energy function $\rho_0 \Psi^\mathrm{elec} = \dfrac{1}{2\epsilon} E_i F^{-1}_{ik} F^{-1}_{jk} E_j $, where $F_{kl}$ is unsymmetric, and $\epsilon>0$ is a material parameter.
+
+Order of arguments\+:~\newline
+ \mbox{[}0\mbox{]} $E_{1}$~\newline
+ \mbox{[}1\mbox{]} $E_{2}$~\newline
+ \mbox{[}2\mbox{]} $E_{3}$~\newline
+ \mbox{[}3\mbox{]} $F^{-1}_{11}$~\newline
+ \mbox{[}4\mbox{]} $F^{-1}_{12}$~\newline
+ \mbox{[}5\mbox{]} $F^{-1}_{13}$~\newline
+ \mbox{[}6\mbox{]} $F^{-1}_{21}$~\newline
+ \mbox{[}7\mbox{]} $F^{-1}_{22}$~\newline
+ \mbox{[}8\mbox{]} $F^{-1}_{23}$~\newline
+ \mbox{[}9\mbox{]} $F^{-1}_{31}$~\newline
+ \mbox{[}10\mbox{]} $F^{-1}_{32}$~\newline
+ \mbox{[}11\mbox{]} $F^{-1}_{33}$ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_elec_ac6ecad253c85c86d1edf2a2250a03383}\label{class_d_e_model_1_1_psi_elec_ac6ecad253c85c86d1edf2a2250a03383}} 
+\index{DEModel::PsiElec@{DEModel::PsiElec}!PsiElec@{PsiElec}}
+\index{PsiElec@{PsiElec}!DEModel::PsiElec@{DEModel::PsiElec}}
+\doxysubsubsection{\texorpdfstring{PsiElec()}{PsiElec()}}
+{\footnotesize\ttfamily D\+E\+Model\+::\+Psi\+Elec\+::\+Psi\+Elec (\begin{DoxyParamCaption}\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{argument\+\_\+set,  }\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{parameter\+\_\+set,  }\item[{const double}]{epsilon }\end{DoxyParamCaption})}
+
+Constructor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argument\+\_\+set} & The names of the arguments\\
+\hline
+\mbox{\texttt{ in}}  & {\em parameter\+\_\+set} & The names of the parameters\\
+\hline
+\mbox{\texttt{ in}}  & {\em epsilon} & The material parameter $\epsilon$ \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_elec_a5a4d687fa704a99c079124f8d5c911d3}\label{class_d_e_model_1_1_psi_elec_a5a4d687fa704a99c079124f8d5c911d3}} 
+\index{DEModel::PsiElec@{DEModel::PsiElec}!compute@{compute}}
+\index{compute@{compute}!DEModel::PsiElec@{DEModel::PsiElec}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily bool D\+E\+Model\+::\+Psi\+Elec\+::compute (\begin{DoxyParamCaption}\item[{double \&}]{value,  }\item[{Eigen\+::\+Vector\+Xd \&}]{gradient,  }\item[{Eigen\+::\+Matrix\+Xd \&}]{hessian,  }\item[{const bool}]{update\+\_\+value,  }\item[{const bool}]{update\+\_\+gradient,  }\item[{const bool}]{update\+\_\+hessian }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+See \textbf{ C\+M\+F\+::\+Function\+::compute()} 
+
+Implements \textbf{ Function$<$ double, Eigen\+::\+Vector\+Xd, Eigen\+::\+Matrix\+Xd, Eigen\+::\+Vector\+Xd, Eigen\+::\+Vector\+Xd $>$}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_elec_ab10414e5752c90209d33c284bba5ae17}\label{class_d_e_model_1_1_psi_elec_ab10414e5752c90209d33c284bba5ae17}} 
+\index{DEModel::PsiElec@{DEModel::PsiElec}!epsilon@{epsilon}}
+\index{epsilon@{epsilon}!DEModel::PsiElec@{DEModel::PsiElec}}
+\doxysubsubsection{\texorpdfstring{epsilon}{epsilon}}
+{\footnotesize\ttfamily const double D\+E\+Model\+::\+Psi\+Elec\+::epsilon\hspace{0.3cm}{\ttfamily [private]}}
+
+Material parameter 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/sst/code/demodel/include/demodel/\mbox{\hyperlink{demodel_8h}{demodel.\+h}}\end{DoxyCompactItemize}
