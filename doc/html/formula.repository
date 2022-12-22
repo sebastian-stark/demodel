@@ -1,0 +1,12 @@
+\_form#0:$ d^\mathrm{i}_{kl} = \dfrac{1}{2}\left( F_{ki} {U^\mathrm{i}}^{-1}_{ij} \dot{U}^\mathrm{i}_{jm} F^{-1}_{ml} + F^{-1}_{ik} \dot{U}^\mathrm{i}_{ij} {U^\mathrm{i}}^{-1}_{jm} F_{lm} \right) $
+\_form#1:$\dot{U}^\mathrm{i}_{kl}$
+\_form#2:${U^\mathrm{i}}^{-1}_{kl}$
+\_form#3:$F_{kl}$
+\_form#4:$F^{-1}_{kl}$
+\_form#5:$f(d^\mathrm{i}_{kl})$
+\_form#6:$g(\dot{U}^\mathrm{i}_{mn}, U^{-1}_{mn}, F_{mn}, F^{-1}_{mn})=f[d^\mathrm{i}_{kl}(\dot{U}^\mathrm{i}_{mn}, U^{-1}_{mn}, F_{mn}, F^{-1}_{mn})]$
+\_form#7:$ w_\alpha = \begin{pmatrix} d^\mathrm{i}_{11} \\ d^\mathrm{i}_{22} \\ d^\mathrm{i}_{33} \\ 2 d^\mathrm{i}_{12} \\ 2 d^\mathrm{i}_{23} \\ 2 d^\mathrm{i}_{31} \end{pmatrix} $
+\_form#8:$ q_\zeta = \begin{pmatrix} \dot{U}^\mathrm{i}_{11} \\ \dot{U}^\mathrm{i}_{22} \\ \dot{U}^\mathrm{i}_{33} \\ 2 \dot{U}^\mathrm{i}_{12} \\ 2 \dot{U}^\mathrm{i}_{23} \\ 2 \dot{U}^\mathrm{i}_{31} \\ U^{-1}_{11} \\ U^{-1}_{22} \\ U^{-1}_{33} \\ 2 U^{-1}_{12} \\ 2 U^{-1}_{23} \\ 2 U^{-1}_{31} \\ F_{11} \\ F_{12} \\ F_{13} \\ F_{21} \\ F_{22} \\ F_{23} \\ F_{31} \\ F_{32} \\ F_{33} \\ F^{-1}_{11} \\ F^{-1}_{12} \\ F^{-1}_{13} \\ F^{-1}_{21} \\ F^{-1}_{22} \\ F^{-1}_{23} \\ F^{-1}_{31} \\ F^{-1}_{32} \\ F^{-1}_{33} \end{pmatrix} $
+\_form#9:$w_\alpha$
+\_form#10:$q_\zeta$
+\_form#11:$ d^\mathrm{i}_{kl} = \dfrac{1}{2}\left( F_{ki} {U^\mathrm{i}}^{-1}_{ij} \dot{U}^\mathrm{i}_{jm} F^{-1}_{ml} + F_{li} {U^\mathrm{i}}^{-1}_{ij} \dot{U}^\mathrm{i}_{jm} F^{-1}_{mk} \right) $

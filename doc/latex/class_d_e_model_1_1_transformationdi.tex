@@ -1,0 +1,71 @@
+\hypertarget{class_d_e_model_1_1_transformationdi}{}\doxysection{D\+E\+Model\+::Transformationdi Class Reference}
+\label{class_d_e_model_1_1_transformationdi}\index{DEModel::Transformationdi@{DEModel::Transformationdi}}
+
+
+{\ttfamily \#include $<$demodel.\+h$>$}
+
+
+
+Inheritance diagram for D\+E\+Model\+::Transformationdi\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_transformationdi__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for D\+E\+Model\+::Transformationdi\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_transformationdi__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_e_model_1_1_transformationdi_ae91ddc992aac84114e185cbda08611a6}{Transformationdi}} (const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ value\+\_\+set}, const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ argument\+\_\+set})
+\item 
+bool \mbox{\hyperlink{class_d_e_model_1_1_transformationdi_a8524c981184775047ae91e8ec96e663f}{compute}} (Eigen\+::\+Vector\+Xd \&value, Eigen\+::\+Matrix\+Xd \&gradient, Eigen\+::\+Matrix\+Xd \&hessian, const bool update\+\_\+value, const bool update\+\_\+gradient, const bool update\+\_\+hessian) override final
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+This class describes a transformation of variables according to $ d^\mathrm{i}_{kl} = \dfrac{1}{2}\left( F_{ki} {U^\mathrm{i}}^{-1}_{ij} \dot{U}^\mathrm{i}_{jm} F^{-1}_{ml} + F_{li} {U^\mathrm{i}}^{-1}_{ij} \dot{U}^\mathrm{i}_{jm} F^{-1}_{mk} \right) $, where $\dot{U}^\mathrm{i}_{kl}$ and ${U^\mathrm{i}}^{-1}_{kl}$ are symmetric, while $F_{kl}$ and $F^{-1}_{kl}$ are unsymmetric.
+
+Given a function $f(d^\mathrm{i}_{kl})$, the result is a function $g(\dot{U}^\mathrm{i}_{mn}, U^{-1}_{mn}, F_{mn}, F^{-1}_{mn})=f[d^\mathrm{i}_{kl}(\dot{U}^\mathrm{i}_{mn}, U^{-1}_{mn}, F_{mn}, F^{-1}_{mn})]$.
+
+The variables are stored as $ w_\alpha = \begin{pmatrix} d^\mathrm{i}_{11} \\ d^\mathrm{i}_{22} \\ d^\mathrm{i}_{33} \\ 2 d^\mathrm{i}_{12} \\ 2 d^\mathrm{i}_{23} \\ 2 d^\mathrm{i}_{31} \end{pmatrix} $ and $ q_\zeta = \begin{pmatrix} \dot{U}^\mathrm{i}_{11} \\ \dot{U}^\mathrm{i}_{22} \\ \dot{U}^\mathrm{i}_{33} \\ 2 \dot{U}^\mathrm{i}_{12} \\ 2 \dot{U}^\mathrm{i}_{23} \\ 2 \dot{U}^\mathrm{i}_{31} \\ U^{-1}_{11} \\ U^{-1}_{22} \\ U^{-1}_{33} \\ 2 U^{-1}_{12} \\ 2 U^{-1}_{23} \\ 2 U^{-1}_{31} \\ F_{11} \\ F_{12} \\ F_{13} \\ F_{21} \\ F_{22} \\ F_{23} \\ F_{31} \\ F_{32} \\ F_{33} \\ F^{-1}_{11} \\ F^{-1}_{12} \\ F^{-1}_{13} \\ F^{-1}_{21} \\ F^{-1}_{22} \\ F^{-1}_{23} \\ F^{-1}_{31} \\ F^{-1}_{32} \\ F^{-1}_{33} \end{pmatrix} $.
+
+See also the general documentation of \textbf{ Variable\+Transform\+Function$<$double, Eigen\+::\+Vector\+Xd, Eigen\+::\+Matrix\+Xd$>$} for further information. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_transformationdi_ae91ddc992aac84114e185cbda08611a6}\label{class_d_e_model_1_1_transformationdi_ae91ddc992aac84114e185cbda08611a6}} 
+\index{DEModel::Transformationdi@{DEModel::Transformationdi}!Transformationdi@{Transformationdi}}
+\index{Transformationdi@{Transformationdi}!DEModel::Transformationdi@{DEModel::Transformationdi}}
+\doxysubsubsection{\texorpdfstring{Transformationdi()}{Transformationdi()}}
+{\footnotesize\ttfamily D\+E\+Model\+::\+Transformationdi\+::\+Transformationdi (\begin{DoxyParamCaption}\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{value\+\_\+set,  }\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{argument\+\_\+set }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em value\+\_\+set} & The variable set $w_\alpha$.\\
+\hline
+\mbox{\texttt{ in}}  & {\em argument\+\_\+set} & The variable set $q_\zeta$. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_transformationdi_a8524c981184775047ae91e8ec96e663f}\label{class_d_e_model_1_1_transformationdi_a8524c981184775047ae91e8ec96e663f}} 
+\index{DEModel::Transformationdi@{DEModel::Transformationdi}!compute@{compute}}
+\index{compute@{compute}!DEModel::Transformationdi@{DEModel::Transformationdi}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily bool D\+E\+Model\+::\+Transformationdi\+::compute (\begin{DoxyParamCaption}\item[{Eigen\+::\+Vector\+Xd \&}]{value,  }\item[{Eigen\+::\+Matrix\+Xd \&}]{gradient,  }\item[{Eigen\+::\+Matrix\+Xd \&}]{hessian,  }\item[{const bool}]{update\+\_\+value,  }\item[{const bool}]{update\+\_\+gradient,  }\item[{const bool}]{update\+\_\+hessian }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [override]}}
+
+See \textbf{ C\+M\+F\+::\+Function\+::compute()} 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/sst/code/demodel/include/demodel/\mbox{\hyperlink{demodel_8h}{demodel.\+h}}\end{DoxyCompactItemize}
