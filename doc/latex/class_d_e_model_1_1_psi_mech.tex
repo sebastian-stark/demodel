@@ -1,0 +1,114 @@
+\hypertarget{class_d_e_model_1_1_psi_mech}{}\doxysection{D\+E\+Model\+::Psi\+Mech Class Reference}
+\label{class_d_e_model_1_1_psi_mech}\index{DEModel::PsiMech@{DEModel::PsiMech}}
+
+
+{\ttfamily \#include $<$demodel.\+h$>$}
+
+
+
+Inheritance diagram for D\+E\+Model\+::Psi\+Mech\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_psi_mech__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for D\+E\+Model\+::Psi\+Mech\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_psi_mech__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_e_model_1_1_psi_mech_afdf133b808e7694b77885b37c6aa42db}{Psi\+Mech}} (const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ argument\+\_\+set}, const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ parameter\+\_\+set}, const double \mbox{\hyperlink{class_d_e_model_1_1_psi_mech_aac8778ae5fb4ae23e01479ee2985e51f}{mu\+\_\+e}}, const double \mbox{\hyperlink{class_d_e_model_1_1_psi_mech_a2d6d73f5d4a32dccf4442c20fd053da0}{mu\+\_\+i}})
+\item 
+bool \mbox{\hyperlink{class_d_e_model_1_1_psi_mech_a3966a8d47b4157ecbabfc2a181fdaa6a}{compute}} (double \&value, Eigen\+::\+Vector\+Xd \&gradient, Eigen\+::\+Matrix\+Xd \&hessian, const bool update\+\_\+value, const bool update\+\_\+gradient, const bool update\+\_\+hessian) override final
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const double \mbox{\hyperlink{class_d_e_model_1_1_psi_mech_aac8778ae5fb4ae23e01479ee2985e51f}{mu\+\_\+e}}
+\item 
+const double \mbox{\hyperlink{class_d_e_model_1_1_psi_mech_a2d6d73f5d4a32dccf4442c20fd053da0}{mu\+\_\+i}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the elastic free energy function $\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} F_{ij} F_{ij} + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} {U^\mathrm{i}}^{-1}_{mi} $, where ${U^\mathrm{i}}^{-1}_{kl}$ is symmetric, while $F_{kl}$ is unsymmetric, and $\mu^\mathrm{e}>0$ and $\mu^\mathrm{i}>0$ are material parameters.
+
+Order of arguments\+:~\newline
+ \mbox{[}0\mbox{]} $F_{11}$~\newline
+ \mbox{[}1\mbox{]} $F_{12}$~\newline
+ \mbox{[}2\mbox{]} $F_{13}$~\newline
+ \mbox{[}3\mbox{]} $F_{21}$~\newline
+ \mbox{[}4\mbox{]} $F_{22}$~\newline
+ \mbox{[}5\mbox{]} $F_{23}$~\newline
+ \mbox{[}6\mbox{]} $F_{31}$~\newline
+ \mbox{[}7\mbox{]} $F_{32}$~\newline
+ \mbox{[}8\mbox{]} $F_{33}$~\newline
+ \mbox{[}9\mbox{]} ${{U}^\mathrm{i}}^{-1}_{11}$~\newline
+ \mbox{[}10\mbox{]} ${{U}^\mathrm{i}}^{-1}_{22}$~\newline
+ \mbox{[}11\mbox{]} ${{U}^\mathrm{i}}^{-1}_{33}$~\newline
+ \mbox{[}12\mbox{]} $2 {{U}^\mathrm{i}}^{-1}_{12}$~\newline
+ \mbox{[}13\mbox{]} $2 {{U}^\mathrm{i}}^{-1}_{23}$~\newline
+ \mbox{[}14\mbox{]} $2 {{U}^\mathrm{i}}^{-1}_{31}$ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_mech_afdf133b808e7694b77885b37c6aa42db}\label{class_d_e_model_1_1_psi_mech_afdf133b808e7694b77885b37c6aa42db}} 
+\index{DEModel::PsiMech@{DEModel::PsiMech}!PsiMech@{PsiMech}}
+\index{PsiMech@{PsiMech}!DEModel::PsiMech@{DEModel::PsiMech}}
+\doxysubsubsection{\texorpdfstring{PsiMech()}{PsiMech()}}
+{\footnotesize\ttfamily D\+E\+Model\+::\+Psi\+Mech\+::\+Psi\+Mech (\begin{DoxyParamCaption}\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{argument\+\_\+set,  }\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{parameter\+\_\+set,  }\item[{const double}]{mu\+\_\+e,  }\item[{const double}]{mu\+\_\+i }\end{DoxyParamCaption})}
+
+Constructor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argument\+\_\+set} & The names of the arguments\\
+\hline
+\mbox{\texttt{ in}}  & {\em parameter\+\_\+set} & The names of the parameters\\
+\hline
+\mbox{\texttt{ in}}  & {\em mu\+\_\+e} & The material parameter $\mu^\mathrm{e}$\\
+\hline
+\mbox{\texttt{ in}}  & {\em mu\+\_\+i} & The material parameter $\mu^\mathrm{i}$ \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_mech_a3966a8d47b4157ecbabfc2a181fdaa6a}\label{class_d_e_model_1_1_psi_mech_a3966a8d47b4157ecbabfc2a181fdaa6a}} 
+\index{DEModel::PsiMech@{DEModel::PsiMech}!compute@{compute}}
+\index{compute@{compute}!DEModel::PsiMech@{DEModel::PsiMech}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily bool D\+E\+Model\+::\+Psi\+Mech\+::compute (\begin{DoxyParamCaption}\item[{double \&}]{value,  }\item[{Eigen\+::\+Vector\+Xd \&}]{gradient,  }\item[{Eigen\+::\+Matrix\+Xd \&}]{hessian,  }\item[{const bool}]{update\+\_\+value,  }\item[{const bool}]{update\+\_\+gradient,  }\item[{const bool}]{update\+\_\+hessian }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+See \textbf{ C\+M\+F\+::\+Function\+::compute()} 
+
+Implements \textbf{ Function$<$ double, Eigen\+::\+Vector\+Xd, Eigen\+::\+Matrix\+Xd, Eigen\+::\+Vector\+Xd, Eigen\+::\+Vector\+Xd $>$}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_mech_aac8778ae5fb4ae23e01479ee2985e51f}\label{class_d_e_model_1_1_psi_mech_aac8778ae5fb4ae23e01479ee2985e51f}} 
+\index{DEModel::PsiMech@{DEModel::PsiMech}!mu\_e@{mu\_e}}
+\index{mu\_e@{mu\_e}!DEModel::PsiMech@{DEModel::PsiMech}}
+\doxysubsubsection{\texorpdfstring{mu\_e}{mu\_e}}
+{\footnotesize\ttfamily const double D\+E\+Model\+::\+Psi\+Mech\+::mu\+\_\+e\hspace{0.3cm}{\ttfamily [private]}}
+
+Material parameter \mbox{\Hypertarget{class_d_e_model_1_1_psi_mech_a2d6d73f5d4a32dccf4442c20fd053da0}\label{class_d_e_model_1_1_psi_mech_a2d6d73f5d4a32dccf4442c20fd053da0}} 
+\index{DEModel::PsiMech@{DEModel::PsiMech}!mu\_i@{mu\_i}}
+\index{mu\_i@{mu\_i}!DEModel::PsiMech@{DEModel::PsiMech}}
+\doxysubsubsection{\texorpdfstring{mu\_i}{mu\_i}}
+{\footnotesize\ttfamily const double D\+E\+Model\+::\+Psi\+Mech\+::mu\+\_\+i\hspace{0.3cm}{\ttfamily [private]}}
+
+Material parameter 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/sst/code/demodel/include/demodel/\mbox{\hyperlink{demodel_8h}{demodel.\+h}}\end{DoxyCompactItemize}

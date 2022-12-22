@@ -62,7 +62,6 @@ v_dw_dq = simplify(transpose(v)*dw_dq);
 
 for i=1:30
  for j=i:30
-  v_d2w_dq2(i,j) = diff(v_dw_dq(i), q(j,1));
   if(i == j)
    disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " replace_pow_2(ccode(simplify(v_d2w_dq2(i,j)))) ";"]);
   else

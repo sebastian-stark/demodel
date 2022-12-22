@@ -10,3 +10,25 @@
 \_form#9:$w_\alpha$
 \_form#10:$q_\zeta$
 \_form#11:$ d^\mathrm{i}_{kl} = \dfrac{1}{2}\left( F_{ki} {U^\mathrm{i}}^{-1}_{ij} \dot{U}^\mathrm{i}_{jm} F^{-1}_{ml} + F_{li} {U^\mathrm{i}}^{-1}_{ij} \dot{U}^\mathrm{i}_{jm} F^{-1}_{mk} \right) $
+\_form#12:$ q_\zeta = \begin{pmatrix} \dot{U}^\mathrm{i}_{11} \\ \dot{U}^\mathrm{i}_{22} \\ \dot{U}^\mathrm{i}_{33} \\ 2 \dot{U}^\mathrm{i}_{12} \\ 2 \dot{U}^\mathrm{i}_{23} \\ 2 \dot{U}^\mathrm{i}_{31} \\ {{U}^\mathrm{i}}^{-1}_{11} \\ {{U}^\mathrm{i}}^{-1}_{22} \\ {{U}^\mathrm{i}}^{-1}_{33} \\ 2 {{U}^\mathrm{i}}^{-1}_{12} \\ 2 {{U}^\mathrm{i}}^{-1}_{23} \\ 2 {{U}^\mathrm{i}}^{-1}_{31} \\ F_{11} \\ F_{12} \\ F_{13} \\ F_{21} \\ F_{22} \\ F_{23} \\ F_{31} \\ F_{32} \\ F_{33} \\ F^{-1}_{11} \\ F^{-1}_{12} \\ F^{-1}_{13} \\ F^{-1}_{21} \\ F^{-1}_{22} \\ F^{-1}_{23} \\ F^{-1}_{31} \\ F^{-1}_{32} \\ F^{-1}_{33} \end{pmatrix} $
+\_form#13:$\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} F_{ij} F_{ij} + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} U^\mathrm{i}}^{-1}_{mi} $
+\_form#14:$\mu^\mathrm{e}>0$
+\_form#15:$\mu^\mathrm{i}>0$
+\_form#16:$F_{11}$
+\_form#17:$F_{12}$
+\_form#18:$F_{13}$
+\_form#19:$F_{21}$
+\_form#20:$F_{22}$
+\_form#21:$F_{23}$
+\_form#22:$F_{31}$
+\_form#23:$F_{32}$
+\_form#24:$F_{33}$
+\_form#25:${{U}^\mathrm{i}}^{-1}_{11}$
+\_form#26:${{U}^\mathrm{i}}^{-1}_{22}$
+\_form#27:${{U}^\mathrm{i}}^{-1}_{33}$
+\_form#28:$2 {{U}^\mathrm{i}}^{-1}_{12}$
+\_form#29:$2 {{U}^\mathrm{i}}^{-1}_{23}$
+\_form#30:$2 {{U}^\mathrm{i}}^{-1}_{31}$
+\_form#31:$\mu^\mathrm{e}$
+\_form#32:$\mu^\mathrm{i}$
+\_form#33:$\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} F_{ij} F_{ij} + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} {U^\mathrm{i}}^{-1}_{mi} $

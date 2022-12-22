@@ -85,7 +85,7 @@ Transformationdi::compute(	VectorXd&	value,
 
 	if(update_gradient)
 	{
-		gradient = Eigen::MatrixXd(value_set.size(), argument_set.size());
+		gradient.resize(value_set.size(), argument_set.size());
 
 		gradient(0,0) = (1.0/2.0)*F_inv11*(2*F11*U_i_inv11 + F21*U_i_inv41 + F31*U_i_inv61);
 		gradient(0,1) = (1.0/2.0)*F_inv41*(F11*U_i_inv41 + 2*F21*U_i_inv21 + F31*U_i_inv51);
@@ -278,7 +278,7 @@ Transformationdi::compute(	VectorXd&	value,
 		const double v51 = get_v()[4];
 		const double v61 = get_v()[5];
 
-		hessian = Eigen::MatrixXd(argument_set.size(), argument_set.size());
+		hessian.resize(argument_set.size(), argument_set.size());
 
 		hessian(0,0) = 0;
 		hessian(0,1) = hessian(1,0) = 0;
@@ -749,5 +749,304 @@ Transformationdi::compute(	VectorXd&	value,
 
 	return false;
 }
+
+/////////////
+// PsiMech //
+/////////////
+
+PsiMech::PsiMech(	const VariableSet	argument_set,
+					const VariableSet	parameter_set,
+					const double		mu_e,
+					const double		mu_i)
+:
+ScalarFunction<double, VectorXd, MatrixXd, VectorXd, VectorXd>(argument_set, parameter_set),
+mu_e(mu_e),
+mu_i(mu_i)
+{
+}
+
+bool
+PsiMech::compute(double&		value,
+				VectorXd&	gradient,
+				MatrixXd&	hessian,
+				const bool	update_value,
+				const bool	update_gradient,
+				const bool	update_hessian)
+{
+	const double F11 = get_arguments()[0];
+	const double F21 = get_arguments()[1];
+	const double F31 = get_arguments()[2];
+	const double F41 = get_arguments()[3];
+	const double F51 = get_arguments()[4];
+	const double F61 = get_arguments()[5];
+	const double F71 = get_arguments()[6];
+	const double F81 = get_arguments()[7];
+	const double F91 = get_arguments()[8];
+
+	const double Ui_inv11 = get_arguments()[9];
+	const double Ui_inv21 = get_arguments()[10];
+	const double Ui_inv31 = get_arguments()[11];
+	const double Ui_inv41 = get_arguments()[12];
+	const double Ui_inv51 = get_arguments()[13];
+	const double Ui_inv61 = get_arguments()[14];
+
+	if(update_value)
+	{
+		value = (1.0/2.0)*mu_e*((F11*F11) + (F21*F21) + (F31*F31) + (F41*F41) + (F51*F51) + (F61*F61) + (F71*F71) + (F81*F81) + (F91*F91)) + (1.0/8.0)*mu_i*(2*Ui_inv11*(F11*(2*F11*Ui_inv11 + F21*Ui_inv41 + F31*Ui_inv61) + F41*(2*F41*Ui_inv11 + F51*Ui_inv41 + F61*Ui_inv61) + F71*(2*F71*Ui_inv11 + F81*Ui_inv41 + F91*Ui_inv61)) + 2*Ui_inv21*(F21*(F11*Ui_inv41 + 2*F21*Ui_inv21 + F31*Ui_inv51) + F51*(F41*Ui_inv41 + 2*F51*Ui_inv21 + F61*Ui_inv51) + F81*(F71*Ui_inv41 + 2*F81*Ui_inv21 + F91*Ui_inv51)) + 2*Ui_inv31*(F31*(F11*Ui_inv61 + F21*Ui_inv51 + 2*F31*Ui_inv31) + F61*(F41*Ui_inv61 + F51*Ui_inv51 + 2*F61*Ui_inv31) + F91*(F71*Ui_inv61 + F81*Ui_inv51 + 2*F91*Ui_inv31)) + Ui_inv41*(F11*(F11*Ui_inv41 + 2*F21*Ui_inv21 + F31*Ui_inv51) + F41*(F41*Ui_inv41 + 2*F51*Ui_inv21 + F61*Ui_inv51) + F71*(F71*Ui_inv41 + 2*F81*Ui_inv21 + F91*Ui_inv51)) + Ui_inv41*(F21*(2*F11*Ui_inv11 + F21*Ui_inv41 + F31*Ui_inv61) + F51*(2*F41*Ui_inv11 + F51*Ui_inv41 + F61*Ui_inv61) + F81*(2*F71*Ui_inv11 + F81*Ui_inv41 + F91*Ui_inv61)) + Ui_inv51*(F21*(F11*Ui_inv61 + F21*Ui_inv51 + 2*F31*Ui_inv31) + F51*(F41*Ui_inv61 + F51*Ui_inv51 + 2*F61*Ui_inv31) + F81*(F71*Ui_inv61 + F81*Ui_inv51 + 2*F91*Ui_inv31)) + Ui_inv51*(F31*(F11*Ui_inv41 + 2*F21*Ui_inv21 + F31*Ui_inv51) + F61*(F41*Ui_inv41 + 2*F51*Ui_inv21 + F61*Ui_inv51) + F91*(F71*Ui_inv41 + 2*F81*Ui_inv21 + F91*Ui_inv51)) + Ui_inv61*(F11*(F11*Ui_inv61 + F21*Ui_inv51 + 2*F31*Ui_inv31) + F41*(F41*Ui_inv61 + F51*Ui_inv51 + 2*F61*Ui_inv31) + F71*(F71*Ui_inv61 + F81*Ui_inv51 + 2*F91*Ui_inv31)) + Ui_inv61*(F31*(2*F11*Ui_inv11 + F21*Ui_inv41 + F31*Ui_inv61) + F61*(2*F41*Ui_inv11 + F51*Ui_inv41 + F61*Ui_inv61) + F91*(2*F71*Ui_inv11 + F81*Ui_inv41 + F91*Ui_inv61)));
+	}
+
+	if(update_gradient)
+	{
+		gradient.resize(15);
+		gradient(0) = F11*(Ui_inv11*Ui_inv11)*mu_i + (1.0/4.0)*F11*(Ui_inv41*Ui_inv41)*mu_i + (1.0/4.0)*F11*(Ui_inv61*Ui_inv61)*mu_i + F11*mu_e +(1.0/2.0)*F21*Ui_inv11*Ui_inv41*mu_i + (1.0/2.0)*F21*Ui_inv21*Ui_inv41*mu_i + (1.0/4.0)*F21*Ui_inv51*Ui_inv61*mu_i + (1.0/2.0)*F31*Ui_inv11*Ui_inv61*mu_i + (1.0/2.0)*F31*Ui_inv31*Ui_inv61*mu_i + (1.0/4.0)*F31*Ui_inv41*Ui_inv51*mu_i;
+		gradient(1) = (1.0/2.0)*F11*Ui_inv11*Ui_inv41*mu_i + (1.0/2.0)*F11*Ui_inv21*Ui_inv41*mu_i + (1.0/4.0)*F11*Ui_inv51*Ui_inv61*mu_i + F21*(Ui_inv21*Ui_inv21)*mu_i + (1.0/4.0)*F21*(Ui_inv41*Ui_inv41)*mu_i + (1.0/4.0)*F21*(Ui_inv51*Ui_inv51)*mu_i + F21*mu_e + (1.0/2.0)*F31*Ui_inv21*Ui_inv51*mu_i + (1.0/2.0)*F31*Ui_inv31*Ui_inv51*mu_i + (1.0/4.0)*F31*Ui_inv41*Ui_inv61*mu_i;
+		gradient(2) = (1.0/2.0)*F11*Ui_inv11*Ui_inv61*mu_i + (1.0/2.0)*F11*Ui_inv31*Ui_inv61*mu_i + (1.0/4.0)*F11*Ui_inv41*Ui_inv51*mu_i + (1.0/2.0)*F21*Ui_inv21*Ui_inv51*mu_i + (1.0/2.0)*F21*Ui_inv31*Ui_inv51*mu_i + (1.0/4.0)*F21*Ui_inv41*Ui_inv61*mu_i + F31*(Ui_inv31*Ui_inv31)*mu_i + (1.0/4.0)*F31*(Ui_inv51*Ui_inv51)*mu_i + (1.0/4.0)*F31*(Ui_inv61*Ui_inv61)*mu_i + F31*mu_e;
+		gradient(3) = F41*(Ui_inv11*Ui_inv11)*mu_i + (1.0/4.0)*F41*(Ui_inv41*Ui_inv41)*mu_i + (1.0/4.0)*F41*(Ui_inv61*Ui_inv61)*mu_i + F41*mu_e +(1.0/2.0)*F51*Ui_inv11*Ui_inv41*mu_i + (1.0/2.0)*F51*Ui_inv21*Ui_inv41*mu_i + (1.0/4.0)*F51*Ui_inv51*Ui_inv61*mu_i + (1.0/2.0)*F61*Ui_inv11*Ui_inv61*mu_i + (1.0/2.0)*F61*Ui_inv31*Ui_inv61*mu_i + (1.0/4.0)*F61*Ui_inv41*Ui_inv51*mu_i;
+		gradient(4) = (1.0/2.0)*F41*Ui_inv11*Ui_inv41*mu_i + (1.0/2.0)*F41*Ui_inv21*Ui_inv41*mu_i + (1.0/4.0)*F41*Ui_inv51*Ui_inv61*mu_i + F51*(Ui_inv21*Ui_inv21)*mu_i + (1.0/4.0)*F51*(Ui_inv41*Ui_inv41)*mu_i + (1.0/4.0)*F51*(Ui_inv51*Ui_inv51)*mu_i + F51*mu_e + (1.0/2.0)*F61*Ui_inv21*Ui_inv51*mu_i + (1.0/2.0)*F61*Ui_inv31*Ui_inv51*mu_i + (1.0/4.0)*F61*Ui_inv41*Ui_inv61*mu_i;
+		gradient(5) = (1.0/2.0)*F41*Ui_inv11*Ui_inv61*mu_i + (1.0/2.0)*F41*Ui_inv31*Ui_inv61*mu_i + (1.0/4.0)*F41*Ui_inv41*Ui_inv51*mu_i + (1.0/2.0)*F51*Ui_inv21*Ui_inv51*mu_i + (1.0/2.0)*F51*Ui_inv31*Ui_inv51*mu_i + (1.0/4.0)*F51*Ui_inv41*Ui_inv61*mu_i + F61*(Ui_inv31*Ui_inv31)*mu_i + (1.0/4.0)*F61*(Ui_inv51*Ui_inv51)*mu_i + (1.0/4.0)*F61*(Ui_inv61*Ui_inv61)*mu_i + F61*mu_e;
+		gradient(6) = F71*(Ui_inv11*Ui_inv11)*mu_i + (1.0/4.0)*F71*(Ui_inv41*Ui_inv41)*mu_i + (1.0/4.0)*F71*(Ui_inv61*Ui_inv61)*mu_i + F71*mu_e +(1.0/2.0)*F81*Ui_inv11*Ui_inv41*mu_i + (1.0/2.0)*F81*Ui_inv21*Ui_inv41*mu_i + (1.0/4.0)*F81*Ui_inv51*Ui_inv61*mu_i + (1.0/2.0)*F91*Ui_inv11*Ui_inv61*mu_i + (1.0/2.0)*F91*Ui_inv31*Ui_inv61*mu_i + (1.0/4.0)*F91*Ui_inv41*Ui_inv51*mu_i;
+		gradient(7) = (1.0/2.0)*F71*Ui_inv11*Ui_inv41*mu_i + (1.0/2.0)*F71*Ui_inv21*Ui_inv41*mu_i + (1.0/4.0)*F71*Ui_inv51*Ui_inv61*mu_i + F81*(Ui_inv21*Ui_inv21)*mu_i + (1.0/4.0)*F81*(Ui_inv41*Ui_inv41)*mu_i + (1.0/4.0)*F81*(Ui_inv51*Ui_inv51)*mu_i + F81*mu_e + (1.0/2.0)*F91*Ui_inv21*Ui_inv51*mu_i + (1.0/2.0)*F91*Ui_inv31*Ui_inv51*mu_i + (1.0/4.0)*F91*Ui_inv41*Ui_inv61*mu_i;
+		gradient(8) = (1.0/2.0)*F71*Ui_inv11*Ui_inv61*mu_i + (1.0/2.0)*F71*Ui_inv31*Ui_inv61*mu_i + (1.0/4.0)*F71*Ui_inv41*Ui_inv51*mu_i + (1.0/2.0)*F81*Ui_inv21*Ui_inv51*mu_i + (1.0/2.0)*F81*Ui_inv31*Ui_inv51*mu_i + (1.0/4.0)*F81*Ui_inv41*Ui_inv61*mu_i + F91*(Ui_inv31*Ui_inv31)*mu_i + (1.0/4.0)*F91*(Ui_inv51*Ui_inv51)*mu_i + (1.0/4.0)*F91*(Ui_inv61*Ui_inv61)*mu_i + F91*mu_e;
+		gradient(9) = (1.0/2.0)*mu_i*(2*(F11*F11)*Ui_inv11 + F11*F21*Ui_inv41 + F11*F31*Ui_inv61 + 2*(F41*F41)*Ui_inv11 + F41*F51*Ui_inv41 + F41*F61*Ui_inv61 + 2*(F71*F71)*Ui_inv11 + F71*F81*Ui_inv41 + F71*F91*Ui_inv61);
+		gradient(10) = (1.0/2.0)*mu_i*(F11*F21*Ui_inv41 + 2*(F21*F21)*Ui_inv21 + F21*F31*Ui_inv51 + F41*F51*Ui_inv41 + 2*(F51*F51)*Ui_inv21 + F51*F61*Ui_inv51 + F71*F81*Ui_inv41 + 2*(F81*F81)*Ui_inv21 + F81*F91*Ui_inv51);
+		gradient(11) = (1.0/2.0)*mu_i*(F11*F31*Ui_inv61 + F21*F31*Ui_inv51 + 2*(F31*F31)*Ui_inv31 + F41*F61*Ui_inv61 + F51*F61*Ui_inv51 + 2*(F61*F61)*Ui_inv31 + F71*F91*Ui_inv61 + F81*F91*Ui_inv51 + 2*(F91*F91)*Ui_inv31);
+		gradient(12) = (1.0/4.0)*mu_i*((F11*F11)*Ui_inv41 + 2*F11*F21*Ui_inv11 + 2*F11*F21*Ui_inv21 + F11*F31*Ui_inv51 + (F21*F21)*Ui_inv41 + F21*F31*Ui_inv61 + (F41*F41)*Ui_inv41 + 2*F41*F51*Ui_inv11 + 2*F41*F51*Ui_inv21 + F41*F61*Ui_inv51 + (F51*F51)*Ui_inv41 + F51*F61*Ui_inv61 + (F71*F71)*Ui_inv41 + 2*F71*F81*Ui_inv11 + 2*F71*F81*Ui_inv21 + F71*F91*Ui_inv51 + (F81*F81)*Ui_inv41 + F81*F91*Ui_inv61);
+		gradient(13) = (1.0/4.0)*mu_i*(F11*F21*Ui_inv61 + F11*F31*Ui_inv41 + (F21*F21)*Ui_inv51 + 2*F21*F31*Ui_inv21 + 2*F21*F31*Ui_inv31 + (F31*F31)*Ui_inv51 + F41*F51*Ui_inv61 + F41*F61*Ui_inv41 + (F51*F51)*Ui_inv51 + 2*F51*F61*Ui_inv21 + 2*F51*F61*Ui_inv31 + (F61*F61)*Ui_inv51 + F71*F81*Ui_inv61 + F71*F91*Ui_inv41 + (F81*F81)*Ui_inv51 + 2*F81*F91*Ui_inv21 + 2*F81*F91*Ui_inv31 + (F91*F91)*Ui_inv51);
+		gradient(14) = (1.0/4.0)*mu_i*((F11*F11)*Ui_inv61 + F11*F21*Ui_inv51 + 2*F11*F31*Ui_inv11 + 2*F11*F31*Ui_inv31 + F21*F31*Ui_inv41 + (F31*F31)*Ui_inv61 + (F41*F41)*Ui_inv61 + F41*F51*Ui_inv51 + 2*F41*F61*Ui_inv11 + 2*F41*F61*Ui_inv31 + F51*F61*Ui_inv41 + (F61*F61)*Ui_inv61 + (F71*F71)*Ui_inv61 + F71*F81*Ui_inv51 + 2*F71*F91*Ui_inv11 + 2*F71*F91*Ui_inv31 + F81*F91*Ui_inv41 + (F91*F91)*Ui_inv61);
+	}
+
+	if(update_hessian)
+	{
+		hessian.resize(15,15);
+		hessian(0,0) = mu_e + (1.0/4.0)*mu_i*(4*(Ui_inv11*Ui_inv11) + (Ui_inv41*Ui_inv41) + (Ui_inv61*Ui_inv61));
+		hessian(0,1) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv41 + 2*Ui_inv21*Ui_inv41 + Ui_inv51*Ui_inv61);
+		hessian(0,2) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv61 + 2*Ui_inv31*Ui_inv61 + Ui_inv41*Ui_inv51);
+		hessian(0,3) = 0;
+		hessian(0,4) = 0;
+		hessian(0,5) = 0;
+		hessian(0,6) = 0;
+		hessian(0,7) = 0;
+		hessian(0,8) = 0;
+		hessian(0,9) = (1.0/2.0)*mu_i*(4*F11*Ui_inv11 + F21*Ui_inv41 + F31*Ui_inv61);
+		hessian(0,10) = (1.0/2.0)*F21*Ui_inv41*mu_i;
+		hessian(0,11) = (1.0/2.0)*F31*Ui_inv61*mu_i;
+		hessian(0,12) = (1.0/4.0)*mu_i*(2*F11*Ui_inv41 + 2*F21*Ui_inv11 + 2*F21*Ui_inv21 + F31*Ui_inv51);
+		hessian(0,13) = (1.0/4.0)*mu_i*(F21*Ui_inv61 + F31*Ui_inv41);
+		hessian(0,14) = (1.0/4.0)*mu_i*(2*F11*Ui_inv61 + F21*Ui_inv51 + 2*F31*Ui_inv11 + 2*F31*Ui_inv31);
+		hessian(1,0) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv41 + 2*Ui_inv21*Ui_inv41 + Ui_inv51*Ui_inv61);
+		hessian(1,1) = mu_e + (1.0/4.0)*mu_i*(4*(Ui_inv21*Ui_inv21) + (Ui_inv41*Ui_inv41) + (Ui_inv51*Ui_inv51));
+		hessian(1,2) = (1.0/4.0)*mu_i*(2*Ui_inv21*Ui_inv51 + 2*Ui_inv31*Ui_inv51 + Ui_inv41*Ui_inv61);
+		hessian(1,3) = 0;
+		hessian(1,4) = 0;
+		hessian(1,5) = 0;
+		hessian(1,6) = 0;
+		hessian(1,7) = 0;
+		hessian(1,8) = 0;
+		hessian(1,9) = (1.0/2.0)*F11*Ui_inv41*mu_i;
+		hessian(1,10) = (1.0/2.0)*mu_i*(F11*Ui_inv41 + 4*F21*Ui_inv21 + F31*Ui_inv51);
+		hessian(1,11) = (1.0/2.0)*F31*Ui_inv51*mu_i;
+		hessian(1,12) = (1.0/4.0)*mu_i*(2*F11*Ui_inv11 + 2*F11*Ui_inv21 + 2*F21*Ui_inv41 + F31*Ui_inv61);
+		hessian(1,13) = (1.0/4.0)*mu_i*(F11*Ui_inv61 + 2*F21*Ui_inv51 + 2*F31*Ui_inv21 + 2*F31*Ui_inv31);
+		hessian(1,14) = (1.0/4.0)*mu_i*(F11*Ui_inv51 + F31*Ui_inv41);
+		hessian(2,0) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv61 + 2*Ui_inv31*Ui_inv61 + Ui_inv41*Ui_inv51);
+		hessian(2,1) = (1.0/4.0)*mu_i*(2*Ui_inv21*Ui_inv51 + 2*Ui_inv31*Ui_inv51 + Ui_inv41*Ui_inv61);
+		hessian(2,2) = mu_e + (1.0/4.0)*mu_i*(4*(Ui_inv31*Ui_inv31) + (Ui_inv51*Ui_inv51) + (Ui_inv61*Ui_inv61));
+		hessian(2,3) = 0;
+		hessian(2,4) = 0;
+		hessian(2,5) = 0;
+		hessian(2,6) = 0;
+		hessian(2,7) = 0;
+		hessian(2,8) = 0;
+		hessian(2,9) = (1.0/2.0)*F11*Ui_inv61*mu_i;
+		hessian(2,10) = (1.0/2.0)*F21*Ui_inv51*mu_i;
+		hessian(2,11) = (1.0/2.0)*mu_i*(F11*Ui_inv61 + F21*Ui_inv51 + 4*F31*Ui_inv31);
+		hessian(2,12) = (1.0/4.0)*mu_i*(F11*Ui_inv51 + F21*Ui_inv61);
+		hessian(2,13) = (1.0/4.0)*mu_i*(F11*Ui_inv41 + 2*F21*Ui_inv21 + 2*F21*Ui_inv31 + 2*F31*Ui_inv51);
+		hessian(2,14) = (1.0/4.0)*mu_i*(2*F11*Ui_inv11 + 2*F11*Ui_inv31 + F21*Ui_inv41 + 2*F31*Ui_inv61);
+		hessian(3,0) = 0;
+		hessian(3,1) = 0;
+		hessian(3,2) = 0;
+		hessian(3,3) = mu_e + (1.0/4.0)*mu_i*(4*(Ui_inv11*Ui_inv11) + (Ui_inv41*Ui_inv41) + (Ui_inv61*Ui_inv61));
+		hessian(3,4) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv41 + 2*Ui_inv21*Ui_inv41 + Ui_inv51*Ui_inv61);
+		hessian(3,5) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv61 + 2*Ui_inv31*Ui_inv61 + Ui_inv41*Ui_inv51);
+		hessian(3,6) = 0;
+		hessian(3,7) = 0;
+		hessian(3,8) = 0;
+		hessian(3,9) = (1.0/2.0)*mu_i*(4*F41*Ui_inv11 + F51*Ui_inv41 + F61*Ui_inv61);
+		hessian(3,10) = (1.0/2.0)*F51*Ui_inv41*mu_i;
+		hessian(3,11) = (1.0/2.0)*F61*Ui_inv61*mu_i;
+		hessian(3,12) = (1.0/4.0)*mu_i*(2*F41*Ui_inv41 + 2*F51*Ui_inv11 + 2*F51*Ui_inv21 + F61*Ui_inv51);
+		hessian(3,13) = (1.0/4.0)*mu_i*(F51*Ui_inv61 + F61*Ui_inv41);
+		hessian(3,14) = (1.0/4.0)*mu_i*(2*F41*Ui_inv61 + F51*Ui_inv51 + 2*F61*Ui_inv11 + 2*F61*Ui_inv31);
+		hessian(4,0) = 0;
+		hessian(4,1) = 0;
+		hessian(4,2) = 0;
+		hessian(4,3) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv41 + 2*Ui_inv21*Ui_inv41 + Ui_inv51*Ui_inv61);
+		hessian(4,4) = mu_e + (1.0/4.0)*mu_i*(4*(Ui_inv21*Ui_inv21) + (Ui_inv41*Ui_inv41) + (Ui_inv51*Ui_inv51));
+		hessian(4,5) = (1.0/4.0)*mu_i*(2*Ui_inv21*Ui_inv51 + 2*Ui_inv31*Ui_inv51 + Ui_inv41*Ui_inv61);
+		hessian(4,6) = 0;
+		hessian(4,7) = 0;
+		hessian(4,8) = 0;
+		hessian(4,9) = (1.0/2.0)*F41*Ui_inv41*mu_i;
+		hessian(4,10) = (1.0/2.0)*mu_i*(F41*Ui_inv41 + 4*F51*Ui_inv21 + F61*Ui_inv51);
+		hessian(4,11) = (1.0/2.0)*F61*Ui_inv51*mu_i;
+		hessian(4,12) = (1.0/4.0)*mu_i*(2*F41*Ui_inv11 + 2*F41*Ui_inv21 + 2*F51*Ui_inv41 + F61*Ui_inv61);
+		hessian(4,13) = (1.0/4.0)*mu_i*(F41*Ui_inv61 + 2*F51*Ui_inv51 + 2*F61*Ui_inv21 + 2*F61*Ui_inv31);
+		hessian(4,14) = (1.0/4.0)*mu_i*(F41*Ui_inv51 + F61*Ui_inv41);
+		hessian(5,0) = 0;
+		hessian(5,1) = 0;
+		hessian(5,2) = 0;
+		hessian(5,3) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv61 + 2*Ui_inv31*Ui_inv61 + Ui_inv41*Ui_inv51);
+		hessian(5,4) = (1.0/4.0)*mu_i*(2*Ui_inv21*Ui_inv51 + 2*Ui_inv31*Ui_inv51 + Ui_inv41*Ui_inv61);
+		hessian(5,5) = mu_e + (1.0/4.0)*mu_i*(4*(Ui_inv31*Ui_inv31) + (Ui_inv51*Ui_inv51) + (Ui_inv61*Ui_inv61));
+		hessian(5,6) = 0;
+		hessian(5,7) = 0;
+		hessian(5,8) = 0;
+		hessian(5,9) = (1.0/2.0)*F41*Ui_inv61*mu_i;
+		hessian(5,10) = (1.0/2.0)*F51*Ui_inv51*mu_i;
+		hessian(5,11) = (1.0/2.0)*mu_i*(F41*Ui_inv61 + F51*Ui_inv51 + 4*F61*Ui_inv31);
+		hessian(5,12) = (1.0/4.0)*mu_i*(F41*Ui_inv51 + F51*Ui_inv61);
+		hessian(5,13) = (1.0/4.0)*mu_i*(F41*Ui_inv41 + 2*F51*Ui_inv21 + 2*F51*Ui_inv31 + 2*F61*Ui_inv51);
+		hessian(5,14) = (1.0/4.0)*mu_i*(2*F41*Ui_inv11 + 2*F41*Ui_inv31 + F51*Ui_inv41 + 2*F61*Ui_inv61);
+		hessian(6,0) = 0;
+		hessian(6,1) = 0;
+		hessian(6,2) = 0;
+		hessian(6,3) = 0;
+		hessian(6,4) = 0;
+		hessian(6,5) = 0;
+		hessian(6,6) = mu_e + (1.0/4.0)*mu_i*(4*(Ui_inv11*Ui_inv11) + (Ui_inv41*Ui_inv41) + (Ui_inv61*Ui_inv61));
+		hessian(6,7) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv41 + 2*Ui_inv21*Ui_inv41 + Ui_inv51*Ui_inv61);
+		hessian(6,8) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv61 + 2*Ui_inv31*Ui_inv61 + Ui_inv41*Ui_inv51);
+		hessian(6,9) = (1.0/2.0)*mu_i*(4*F71*Ui_inv11 + F81*Ui_inv41 + F91*Ui_inv61);
+		hessian(6,10) = (1.0/2.0)*F81*Ui_inv41*mu_i;
+		hessian(6,11) = (1.0/2.0)*F91*Ui_inv61*mu_i;
+		hessian(6,12) = (1.0/4.0)*mu_i*(2*F71*Ui_inv41 + 2*F81*Ui_inv11 + 2*F81*Ui_inv21 + F91*Ui_inv51);
+		hessian(6,13) = (1.0/4.0)*mu_i*(F81*Ui_inv61 + F91*Ui_inv41);
+		hessian(6,14) = (1.0/4.0)*mu_i*(2*F71*Ui_inv61 + F81*Ui_inv51 + 2*F91*Ui_inv11 + 2*F91*Ui_inv31);
+		hessian(7,0) = 0;
+		hessian(7,1) = 0;
+		hessian(7,2) = 0;
+		hessian(7,3) = 0;
+		hessian(7,4) = 0;
+		hessian(7,5) = 0;
+		hessian(7,6) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv41 + 2*Ui_inv21*Ui_inv41 + Ui_inv51*Ui_inv61);
+		hessian(7,7) = mu_e + (1.0/4.0)*mu_i*(4*(Ui_inv21*Ui_inv21) + (Ui_inv41*Ui_inv41) + (Ui_inv51*Ui_inv51));
+		hessian(7,8) = (1.0/4.0)*mu_i*(2*Ui_inv21*Ui_inv51 + 2*Ui_inv31*Ui_inv51 + Ui_inv41*Ui_inv61);
+		hessian(7,9) = (1.0/2.0)*F71*Ui_inv41*mu_i;
+		hessian(7,10) = (1.0/2.0)*mu_i*(F71*Ui_inv41 + 4*F81*Ui_inv21 + F91*Ui_inv51);
+		hessian(7,11) = (1.0/2.0)*F91*Ui_inv51*mu_i;
+		hessian(7,12) = (1.0/4.0)*mu_i*(2*F71*Ui_inv11 + 2*F71*Ui_inv21 + 2*F81*Ui_inv41 + F91*Ui_inv61);
+		hessian(7,13) = (1.0/4.0)*mu_i*(F71*Ui_inv61 + 2*F81*Ui_inv51 + 2*F91*Ui_inv21 + 2*F91*Ui_inv31);
+		hessian(7,14) = (1.0/4.0)*mu_i*(F71*Ui_inv51 + F91*Ui_inv41);
+		hessian(8,0) = 0;
+		hessian(8,1) = 0;
+		hessian(8,2) = 0;
+		hessian(8,3) = 0;
+		hessian(8,4) = 0;
+		hessian(8,5) = 0;
+		hessian(8,6) = (1.0/4.0)*mu_i*(2*Ui_inv11*Ui_inv61 + 2*Ui_inv31*Ui_inv61 + Ui_inv41*Ui_inv51);
+		hessian(8,7) = (1.0/4.0)*mu_i*(2*Ui_inv21*Ui_inv51 + 2*Ui_inv31*Ui_inv51 + Ui_inv41*Ui_inv61);
+		hessian(8,8) = mu_e + (1.0/4.0)*mu_i*(4*(Ui_inv31*Ui_inv31) + (Ui_inv51*Ui_inv51) + (Ui_inv61*Ui_inv61));
+		hessian(8,9) = (1.0/2.0)*F71*Ui_inv61*mu_i;
+		hessian(8,10) = (1.0/2.0)*F81*Ui_inv51*mu_i;
+		hessian(8,11) = (1.0/2.0)*mu_i*(F71*Ui_inv61 + F81*Ui_inv51 + 4*F91*Ui_inv31);
+		hessian(8,12) = (1.0/4.0)*mu_i*(F71*Ui_inv51 + F81*Ui_inv61);
+		hessian(8,13) = (1.0/4.0)*mu_i*(F71*Ui_inv41 + 2*F81*Ui_inv21 + 2*F81*Ui_inv31 + 2*F91*Ui_inv51);
+		hessian(8,14) = (1.0/4.0)*mu_i*(2*F71*Ui_inv11 + 2*F71*Ui_inv31 + F81*Ui_inv41 + 2*F91*Ui_inv61);
+		hessian(9,0) = (1.0/2.0)*mu_i*(4*F11*Ui_inv11 + F21*Ui_inv41 + F31*Ui_inv61);
+		hessian(9,1) = (1.0/2.0)*F11*Ui_inv41*mu_i;
+		hessian(9,2) = (1.0/2.0)*F11*Ui_inv61*mu_i;
+		hessian(9,3) = (1.0/2.0)*mu_i*(4*F41*Ui_inv11 + F51*Ui_inv41 + F61*Ui_inv61);
+		hessian(9,4) = (1.0/2.0)*F41*Ui_inv41*mu_i;
+		hessian(9,5) = (1.0/2.0)*F41*Ui_inv61*mu_i;
+		hessian(9,6) = (1.0/2.0)*mu_i*(4*F71*Ui_inv11 + F81*Ui_inv41 + F91*Ui_inv61);
+		hessian(9,7) = (1.0/2.0)*F71*Ui_inv41*mu_i;
+		hessian(9,8) = (1.0/2.0)*F71*Ui_inv61*mu_i;
+		hessian(9,9) = mu_i*((F11*F11) + (F41*F41) + (F71*F71));
+		hessian(9,10) = 0;
+		hessian(9,11) = 0;
+		hessian(9,12) = (1.0/2.0)*mu_i*(F11*F21 + F41*F51 + F71*F81);
+		hessian(9,13) = 0;
+		hessian(9,14) = (1.0/2.0)*mu_i*(F11*F31 + F41*F61 + F71*F91);
+		hessian(10,0) = (1.0/2.0)*F21*Ui_inv41*mu_i;
+		hessian(10,1) = (1.0/2.0)*mu_i*(F11*Ui_inv41 + 4*F21*Ui_inv21 + F31*Ui_inv51);
+		hessian(10,2) = (1.0/2.0)*F21*Ui_inv51*mu_i;
+		hessian(10,3) = (1.0/2.0)*F51*Ui_inv41*mu_i;
+		hessian(10,4) = (1.0/2.0)*mu_i*(F41*Ui_inv41 + 4*F51*Ui_inv21 + F61*Ui_inv51);
+		hessian(10,5) = (1.0/2.0)*F51*Ui_inv51*mu_i;
+		hessian(10,6) = (1.0/2.0)*F81*Ui_inv41*mu_i;
+		hessian(10,7) = (1.0/2.0)*mu_i*(F71*Ui_inv41 + 4*F81*Ui_inv21 + F91*Ui_inv51);
+		hessian(10,8) = (1.0/2.0)*F81*Ui_inv51*mu_i;
+		hessian(10,9) = 0;
+		hessian(10,10) = mu_i*((F21*F21) + (F51*F51) + (F81*F81));
+		hessian(10,11) = 0;
+		hessian(10,12) = (1.0/2.0)*mu_i*(F11*F21 + F41*F51 + F71*F81);
+		hessian(10,13) = (1.0/2.0)*mu_i*(F21*F31 + F51*F61 + F81*F91);
+		hessian(10,14) = 0;
+		hessian(11,0) = (1.0/2.0)*F31*Ui_inv61*mu_i;
+		hessian(11,1) = (1.0/2.0)*F31*Ui_inv51*mu_i;
+		hessian(11,2) = (1.0/2.0)*mu_i*(F11*Ui_inv61 + F21*Ui_inv51 + 4*F31*Ui_inv31);
+		hessian(11,3) = (1.0/2.0)*F61*Ui_inv61*mu_i;
+		hessian(11,4) = (1.0/2.0)*F61*Ui_inv51*mu_i;
+		hessian(11,5) = (1.0/2.0)*mu_i*(F41*Ui_inv61 + F51*Ui_inv51 + 4*F61*Ui_inv31);
+		hessian(11,6) = (1.0/2.0)*F91*Ui_inv61*mu_i;
+		hessian(11,7) = (1.0/2.0)*F91*Ui_inv51*mu_i;
+		hessian(11,8) = (1.0/2.0)*mu_i*(F71*Ui_inv61 + F81*Ui_inv51 + 4*F91*Ui_inv31);
+		hessian(11,9) = 0;
+		hessian(11,10) = 0;
+		hessian(11,11) = mu_i*((F31*F31) + (F61*F61) + (F91*F91));
+		hessian(11,12) = 0;
+		hessian(11,13) = (1.0/2.0)*mu_i*(F21*F31 + F51*F61 + F81*F91);
+		hessian(11,14) = (1.0/2.0)*mu_i*(F11*F31 + F41*F61 + F71*F91);
+		hessian(12,0) = (1.0/4.0)*mu_i*(2*F11*Ui_inv41 + 2*F21*Ui_inv11 + 2*F21*Ui_inv21 + F31*Ui_inv51);
+		hessian(12,1) = (1.0/4.0)*mu_i*(2*F11*Ui_inv11 + 2*F11*Ui_inv21 + 2*F21*Ui_inv41 + F31*Ui_inv61);
+		hessian(12,2) = (1.0/4.0)*mu_i*(F11*Ui_inv51 + F21*Ui_inv61);
+		hessian(12,3) = (1.0/4.0)*mu_i*(2*F41*Ui_inv41 + 2*F51*Ui_inv11 + 2*F51*Ui_inv21 + F61*Ui_inv51);
+		hessian(12,4) = (1.0/4.0)*mu_i*(2*F41*Ui_inv11 + 2*F41*Ui_inv21 + 2*F51*Ui_inv41 + F61*Ui_inv61);
+		hessian(12,5) = (1.0/4.0)*mu_i*(F41*Ui_inv51 + F51*Ui_inv61);
+		hessian(12,6) = (1.0/4.0)*mu_i*(2*F71*Ui_inv41 + 2*F81*Ui_inv11 + 2*F81*Ui_inv21 + F91*Ui_inv51);
+		hessian(12,7) = (1.0/4.0)*mu_i*(2*F71*Ui_inv11 + 2*F71*Ui_inv21 + 2*F81*Ui_inv41 + F91*Ui_inv61);
+		hessian(12,8) = (1.0/4.0)*mu_i*(F71*Ui_inv51 + F81*Ui_inv61);
+		hessian(12,9) = (1.0/2.0)*mu_i*(F11*F21 + F41*F51 + F71*F81);
+		hessian(12,10) = (1.0/2.0)*mu_i*(F11*F21 + F41*F51 + F71*F81);
+		hessian(12,11) = 0;
+		hessian(12,12) = (1.0/4.0)*mu_i*((F11*F11) + (F21*F21) + (F41*F41) + (F51*F51) + (F71*F71) + (F81*F81));
+		hessian(12,13) = (1.0/4.0)*mu_i*(F11*F31 + F41*F61 + F71*F91);
+		hessian(12,14) = (1.0/4.0)*mu_i*(F21*F31 + F51*F61 + F81*F91);
+		hessian(13,0) = (1.0/4.0)*mu_i*(F21*Ui_inv61 + F31*Ui_inv41);
+		hessian(13,1) = (1.0/4.0)*mu_i*(F11*Ui_inv61 + 2*F21*Ui_inv51 + 2*F31*Ui_inv21 + 2*F31*Ui_inv31);
+		hessian(13,2) = (1.0/4.0)*mu_i*(F11*Ui_inv41 + 2*F21*Ui_inv21 + 2*F21*Ui_inv31 + 2*F31*Ui_inv51);
+		hessian(13,3) = (1.0/4.0)*mu_i*(F51*Ui_inv61 + F61*Ui_inv41);
+		hessian(13,4) = (1.0/4.0)*mu_i*(F41*Ui_inv61 + 2*F51*Ui_inv51 + 2*F61*Ui_inv21 + 2*F61*Ui_inv31);
+		hessian(13,5) = (1.0/4.0)*mu_i*(F41*Ui_inv41 + 2*F51*Ui_inv21 + 2*F51*Ui_inv31 + 2*F61*Ui_inv51);
+		hessian(13,6) = (1.0/4.0)*mu_i*(F81*Ui_inv61 + F91*Ui_inv41);
+		hessian(13,7) = (1.0/4.0)*mu_i*(F71*Ui_inv61 + 2*F81*Ui_inv51 + 2*F91*Ui_inv21 + 2*F91*Ui_inv31);
+		hessian(13,8) = (1.0/4.0)*mu_i*(F71*Ui_inv41 + 2*F81*Ui_inv21 + 2*F81*Ui_inv31 + 2*F91*Ui_inv51);
+		hessian(13,9) = 0;
+		hessian(13,10) = (1.0/2.0)*mu_i*(F21*F31 + F51*F61 + F81*F91);
+		hessian(13,11) = (1.0/2.0)*mu_i*(F21*F31 + F51*F61 + F81*F91);
+		hessian(13,12) = (1.0/4.0)*mu_i*(F11*F31 + F41*F61 + F71*F91);
+		hessian(13,13) = (1.0/4.0)*mu_i*((F21*F21) + (F31*F31) + (F51*F51) + (F61*F61) + (F81*F81) + (F91*F91));
+		hessian(13,14) = (1.0/4.0)*mu_i*(F11*F21 + F41*F51 + F71*F81);
+		hessian(14,0) = (1.0/4.0)*mu_i*(2*F11*Ui_inv61 + F21*Ui_inv51 + 2*F31*Ui_inv11 + 2*F31*Ui_inv31);
+		hessian(14,1) = (1.0/4.0)*mu_i*(F11*Ui_inv51 + F31*Ui_inv41);
+		hessian(14,2) = (1.0/4.0)*mu_i*(2*F11*Ui_inv11 + 2*F11*Ui_inv31 + F21*Ui_inv41 + 2*F31*Ui_inv61);
+		hessian(14,3) = (1.0/4.0)*mu_i*(2*F41*Ui_inv61 + F51*Ui_inv51 + 2*F61*Ui_inv11 + 2*F61*Ui_inv31);
+		hessian(14,4) = (1.0/4.0)*mu_i*(F41*Ui_inv51 + F61*Ui_inv41);
+		hessian(14,5) = (1.0/4.0)*mu_i*(2*F41*Ui_inv11 + 2*F41*Ui_inv31 + F51*Ui_inv41 + 2*F61*Ui_inv61);
+		hessian(14,6) = (1.0/4.0)*mu_i*(2*F71*Ui_inv61 + F81*Ui_inv51 + 2*F91*Ui_inv11 + 2*F91*Ui_inv31);
+		hessian(14,7) = (1.0/4.0)*mu_i*(F71*Ui_inv51 + F91*Ui_inv41);
+		hessian(14,8) = (1.0/4.0)*mu_i*(2*F71*Ui_inv11 + 2*F71*Ui_inv31 + F81*Ui_inv41 + 2*F91*Ui_inv61);
+		hessian(14,9) = (1.0/2.0)*mu_i*(F11*F31 + F41*F61 + F71*F91);
+		hessian(14,10) = 0;
+		hessian(14,11) = (1.0/2.0)*mu_i*(F11*F31 + F41*F61 + F71*F91);
+		hessian(14,12) = (1.0/4.0)*mu_i*(F21*F31 + F51*F61 + F81*F91);
+		hessian(14,13) = (1.0/4.0)*mu_i*(F11*F21 + F41*F51 + F71*F81);
+		hessian(14,14) = (1.0/4.0)*mu_i*((F11*F11) + (F31*F31) + (F41*F41) + (F61*F61) + (F71*F71) + (F91*F91));
+	}
+
+	return false;
+}
+
 
 }

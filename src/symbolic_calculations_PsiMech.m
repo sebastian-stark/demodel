@@ -14,44 +14,34 @@ endfunction
 
 pkg load symbolic;
 
-syms Ji;
-E_te = sym('E_te', [6 1]);
-syms Ji_mu(Ji);
-syms Ji_lambda(Ji);
-syms epsT(Ji);
+syms mu_e mu_i;
+F = sym('F', [9 1]);
+U_i_inv = sym('Ui_inv', [6 1]);
+q = [F; U_i_inv];
 
-eps_el = E_te - [epsT;epsT;epsT;0;0;0];
+F_M = [F(1) F(2) F(3);
+       F(4) F(5) F(6);
+       F(7) F(8) F(9);];
 
-C=[2*Ji_mu+Ji_lambda Ji_lambda Ji_lambda 0 0 0;
-   Ji_lambda 2*Ji_mu+Ji_lambda Ji_lambda 0 0 0;
-   Ji_lambda Ji_lambda 2*Ji_mu+Ji_lambda 0 0 0;
-   0 0 0 Ji_mu 0 0;
-   0 0 0 0 Ji_mu 0;
-   0 0 0 0 0 Ji_mu];
-              
-Psi = simplify(sym(1)/sym(2) * transpose(eps_el) * C * eps_el);
+U_i_inv_M = [U_i_inv(1) U_i_inv(4)/2 U_i_inv(6)/2;
+             U_i_inv(4)/2 U_i_inv(2) U_i_inv(5)/2;
+             U_i_inv(6)/2 U_i_inv(5)/2 U_i_inv(3)];
+             
+Psi = simplify(mu_e/sym(2) * trace(transpose(F_M)*F_M) + mu_i/sym(2) * trace(U_i_inv_M*transpose(F_M)*F_M*U_i_inv_M) );
 disp(["value = " replace_expr(ccode(simplify(Psi))) ";"]);
 
 disp(" ");
 
-for i=1:6
-  dPsi_dE_te(i) = diff(Psi, E_te(i,1));
-  disp(["gradient(" num2str(i-1) ") = " replace_expr(ccode(simplify(dPsi_dE_te(i)))) ";"]);
+for i=1:15
+  dPsi_dq(i) = diff(Psi, q(i,1));
+  disp(["gradient(" num2str(i-1) ") = " replace_expr(ccode(simplify(dPsi_dq(i)))) ";"]);
 endfor
-dPsi_dJi = diff(Psi, Ji);
-disp(["gradient(6) = " replace_expr(ccode(simplify(dPsi_dJi))) ";"]);
 
 disp(" ");
 
-for i=1:6
- for j=1:6
-  d2Psi_dE_te2(i,j) = diff(dPsi_dE_te(i), E_te(j,1));
-  disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " replace_expr(ccode(simplify(d2Psi_dE_te2(i,j)))) ";"]);
+for i=1:15
+ for j=1:15
+  d2Psi_dq2(i,j) = diff(dPsi_dq(i), q(j,1));
+  disp(["hessian(" num2str(i-1) "," num2str(j-1) ") = " replace_expr(ccode(simplify(d2Psi_dq2(i,j)))) ";"]);
  endfor
 endfor
-for i=1:6
-  d2Psi_dEdJi(i) = diff(dPsi_dE_te(i), Ji);
-  disp(["hessian(" num2str(i-1) "," num2str(6) ") = hessian(" num2str(6) "," num2str(i-1) ") = " replace_expr(ccode(simplify(d2Psi_dEdJi(i)))) ";"]);
-endfor
-d2Psi_Ji2 = diff(dPsi_dJi, Ji);
-disp(["hessian(6,6) = " replace_expr(ccode(simplify(d2Psi_Ji2))) ";"]);
