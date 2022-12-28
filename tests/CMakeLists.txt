@@ -5,7 +5,8 @@ LIST(APPEND TESTS	transformation_di_00
 					psi_surf_00
 					delta_eta_00
 					psi_mech_01
-					psi_elec_01)
+					psi_elec_01
+					delta_eta_01)
 
 FOREACH(TEST ${TESTS})
   ADD_EXECUTABLE(${TEST} ${TEST}.cc)
