@@ -16,7 +16,7 @@ using namespace std;
 using namespace CMF;
 
 /**
- * Test for PsiElPaper2018
+ * Test for PsiMech
  */
 
 int main(int argc, char *argv[])

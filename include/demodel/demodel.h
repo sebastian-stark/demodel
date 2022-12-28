@@ -11,6 +11,8 @@
 #define INCLUDE_DEMODEL_DEMODEL_H_
 
 #include <cmf/scalar_function.h>
+#include <cmf/variable_transform_function.h>
+#include <cmf/derivative_transform_lib.h>
 
 namespace DEModel
 {
@@ -301,9 +303,6 @@ public:
 	override
 	final;
 };
-
-
-
 
 }
 

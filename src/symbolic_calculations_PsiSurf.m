@@ -21,8 +21,6 @@ a = [a(1) a(4) a(6);
      a(4) a(2) a(5);
      a(6) a(5) a(3)];
      
-
-
 F_S = grad_u_M + a;
 C_S = transpose(F_S)*F_S;
 tr_C_S = trace(C_S);

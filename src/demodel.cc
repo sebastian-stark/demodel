@@ -1381,6 +1381,4 @@ DeltaEta::compute(	double&		value,
 	return false;
 }
 
-
-
 }

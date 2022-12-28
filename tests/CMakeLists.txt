@@ -3,7 +3,8 @@ LIST(APPEND TESTS	transformation_di_00
 					psi_mech_00
 					psi_elec_00
 					psi_surf_00
-					delta_eta_00)
+					delta_eta_00
+					psi_mech_01)
 
 FOREACH(TEST ${TESTS})
   ADD_EXECUTABLE(${TEST} ${TEST}.cc)
