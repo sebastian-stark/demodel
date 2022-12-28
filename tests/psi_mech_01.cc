@@ -32,12 +32,9 @@ int main(int argc, char *argv[])
 
 	DEModel::PsiMech psi_mech({"F_11", "F_12", "F_13", "F_21", "F_22", "F_23", "F_31", "F_32", "F_33", "Ui_inv_11", "Ui_inv_22", "Ui_inv_33", "2*Ui_inv_12", "2*Ui_inv_23", "2*Ui_inv_31"}, {}, mu_e, mu_i);
 
-	TransformationIdentity
-	transformation_identity_F = CMF::TransformationIdentity({"F_11", "F_12", "F_13", "F_21", "F_22", "F_23", "F_31", "F_32", "F_33"}, {"F_11", "F_12", "F_13", "F_21", "F_22", "F_23", "F_31", "F_32", "F_33"});
-	TransformationInverseSymmetricRank2Tensor
-	transformation_Ui_inv_Ui = CMF::TransformationInverseSymmetricRank2Tensor({"Ui_inv_11", "Ui_inv_22", "Ui_inv_33", "2*Ui_inv_12", "2*Ui_inv_23", "2*Ui_inv_31"}, {"Ui_11", "Ui_22", "Ui_33", "2*Ui_12", "2*Ui_23", "2*Ui_31"});
-	CombinedVariableTransformFunction<Eigen::VectorXd, Eigen::MatrixXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>
-	transform_Ui_inv_Ui = CMF::CombinedVariableTransformFunction<Eigen::VectorXd, Eigen::MatrixXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>({&transformation_identity_F, &transformation_Ui_inv_Ui});
+	TransformationIdentity transformation_identity_F = CMF::TransformationIdentity({"F_11", "F_12", "F_13", "F_21", "F_22", "F_23", "F_31", "F_32", "F_33"}, {"F_11", "F_12", "F_13", "F_21", "F_22", "F_23", "F_31", "F_32", "F_33"});
+	TransformationInverseSymmetricRank2Tensor transformation_Ui_inv_Ui = CMF::TransformationInverseSymmetricRank2Tensor({"Ui_inv_11", "Ui_inv_22", "Ui_inv_33", "2*Ui_inv_12", "2*Ui_inv_23", "2*Ui_inv_31"}, {"Ui_11", "Ui_22", "Ui_33", "2*Ui_12", "2*Ui_23", "2*Ui_31"});
+	CombinedVariableTransformFunction<Eigen::VectorXd, Eigen::MatrixXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> transform_Ui_inv_Ui = CMF::CombinedVariableTransformFunction<Eigen::VectorXd, Eigen::MatrixXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>({&transformation_identity_F, &transformation_Ui_inv_Ui});
 	TransformedScalarFunction<double, Eigen::VectorXd, Eigen::MatrixXd> psi_mech_transformed(psi_mech, transform_Ui_inv_Ui);
 
 	Eigen::VectorXd arguments(15), parameters(0);
