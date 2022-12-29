@@ -74,6 +74,10 @@ public:
  * 							[12] \f$2 {{U}^\mathrm{i}}^{-1}_{12}\f$<br>
  * 							[13] \f$2 {{U}^\mathrm{i}}^{-1}_{23}\f$<br>
  * 							[14] \f$2 {{U}^\mathrm{i}}^{-1}_{31}\f$
+ *
+ * Order of parameters:<br>	[0]	 \f$x_1\f$<br>
+ * 							[1]	 \f$x_2\f$<br>
+ * 							[2]	 \f$x_3\f$<br>
  */
 class PsiMech : public CMF::ScalarFunction<double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>
 {
@@ -141,6 +145,10 @@ public:
  * 							[9]	 \f$F^{-1}_{31}\f$<br>
  * 							[10] \f$F^{-1}_{32}\f$<br>
  * 							[11] \f$F^{-1}_{33}\f$
+ *
+ * Order of parameters:<br>	[0]	 \f$x_1\f$<br>
+ * 							[1]	 \f$x_2\f$<br>
+ * 							[2]	 \f$x_3\f$<br>
  */
 class PsiElec : public CMF::ScalarFunction<double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>
 {
@@ -198,9 +206,12 @@ public:
  * 							[7] \f$u^\mathrm{S}_{3,2}\f$<br>
  * 							[8] \f$u^\mathrm{S}_{3,3}\f$
  *
- * Order of parameters:<br>	[0] \f$n_{1}\f$<br>
- * 							[1] \f$n_{2}\f$<br>
- * 							[2] \f$n_{3}\f$<br>
+ * Order of parameters:<br>	[0]	\f$x_1\f$<br>
+ * 							[1]	\f$x_2\f$<br>
+ * 							[2]	\f$x_3\f$<br>
+ * 							[3] \f$n_{1}\f$<br>
+ * 							[4] \f$n_{2}\f$<br>
+ * 							[5] \f$n_{3}\f$<br>
  */
 class PsiSurf : public CMF::ScalarFunction<double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>
 {
@@ -262,6 +273,11 @@ public:
  * 							[3]	 \f$2 d^\mathrm{i}_{12}\f$<br>
  * 							[4]	 \f$2 d^\mathrm{i}_{23}\f$<br>
  * 							[5]	 \f$2 d^\mathrm{i}_{31}\f$<br>
+ *
+ * Order of parameters:<br>	[0] Time \f$t\f$<br>
+ * 							[1]	\f$x_1\f$<br>
+ * 							[2]	\f$x_2\f$<br>
+ * 							[3]	\f$x_3\f$<br>
  */
 class DeltaEta : public CMF::ScalarFunction<double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>
 {

@@ -27,9 +27,9 @@ int main(int argc, char *argv[])
 
 	const double eta = 1.2;
 
-	DEModel::DeltaEta delta_eta({"di_11", "di_22", "di_33", "2*di_12", "2*di_23", "2*di_31"}, {}, eta);
+	DEModel::DeltaEta delta_eta({"di_11", "di_22", "di_33", "2*di_12", "2*di_23", "2*di_31"}, {"t", "x_1", "x_2", "x_3"}, eta);
 
-	Eigen::VectorXd arguments(6), parameters(0);
+	Eigen::VectorXd arguments(6), parameters(4);
 	arguments << 0.552314, 0.495467, 0.808784, 0.404693, 0.029189, -0.177586;
 
 	delta_eta.set_arguments(arguments);

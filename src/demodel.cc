@@ -1214,9 +1214,9 @@ PsiSurf::compute(	double&		value,
 					const bool	update_gradient,
 					const bool	update_hessian)
 {
-	const double n11 = get_parameters()[0];
-	const double n21 = get_parameters()[1];
-	const double n31 = get_parameters()[2];
+	const double n11 = get_parameters()[3];
+	const double n21 = get_parameters()[4];
+	const double n31 = get_parameters()[5];
 
 	const double a11 = 1.0 - n11*n11;
 	const double a21 = 1.0 - n21*n21;
