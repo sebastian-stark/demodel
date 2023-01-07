@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	// initialize logging
 	initlog(argc, argv, "psi_elec_01");
 
-	const double epsilon = 1.2;
+	const double epsilon = 1.0/1.2;
 
 	DEModel::PsiElec psi_elec({"E_1", "E_2", "E_3", "F_inv_11", "F_inv_12", "F_inv_13", "F_inv_21", "F_inv_22", "F_inv_23", "F_inv_31", "F_inv_32", "F_inv_33"}, {"x_1", "x_2", "x_3"}, epsilon);
 

@@ -94,3 +94,4 @@
 \_form#93:$\rho_0 \Psi^\mathrm{inc} = p(1-J) $
 \_form#94:$p$
 \_form#95:$J$
+\_form#96:$\rho_0 \Psi^\mathrm{elec} = -\dfrac{\epsilon}{2} E_i F^{-1}_{ik} F^{-1}_{jk} E_j $

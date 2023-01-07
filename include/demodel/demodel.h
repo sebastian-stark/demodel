@@ -130,7 +130,7 @@ public:
 };
 
 /**
- * Implementation of the electrostatic free energy function \f$\rho_0 \Psi^\mathrm{elec} = -\dfrac{1}{2\epsilon} E_i F^{-1}_{ik} F^{-1}_{jk} E_j \f$,
+ * Implementation of the electrostatic free energy function \f$\rho_0 \Psi^\mathrm{elec} = -\dfrac{\epsilon}{2} E_i F^{-1}_{ik} F^{-1}_{jk} E_j \f$,
  * where \f$F_{kl}\f$ is unsymmetric, and \f$\epsilon>0\f$ is a material parameter.
  *
  * Order of arguments:<br>	[0]	 \f$E_{1}\f$<br>
