@@ -1191,6 +1191,50 @@ PsiElec::compute(	double&		value,
 	return false;
 }
 
+//////////////////////////
+// PsiIncompressibility //
+//////////////////////////
+
+PsiIncompressibility::PsiIncompressibility(	const VariableSet	argument_set,
+											const VariableSet	parameter_set)
+:
+ScalarFunction<double, VectorXd, MatrixXd, VectorXd, VectorXd>(argument_set, parameter_set)
+{
+}
+
+bool
+PsiIncompressibility::compute(	double&		value,
+								VectorXd&	gradient,
+								MatrixXd&	hessian,
+								const bool	update_value,
+								const bool	update_gradient,
+								const bool	update_hessian)
+{
+	const double p = get_arguments()[0];
+	const double J = get_arguments()[1];
+
+	if(update_value)
+	{
+		value = p*(1.0 - J);
+	}
+
+	if(update_gradient)
+	{
+		gradient.resize(2);
+		gradient(0) = 1.0 - J;
+		gradient(1) = -p;
+	}
+
+	if(update_hessian)
+	{
+		hessian.resize(2,2);
+		hessian(0,0) = hessian(1,1) = 0.0;
+		hessian(0,1) = hessian(1,0) = -1.0;
+	}
+
+	return false;
+}
+
 /////////////
 // PsiSurf //
 /////////////

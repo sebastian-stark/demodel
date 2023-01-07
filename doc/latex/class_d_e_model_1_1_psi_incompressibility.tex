@@ -1,0 +1,84 @@
+\hypertarget{class_d_e_model_1_1_psi_incompressibility}{}\doxysection{D\+E\+Model\+::Psi\+Incompressibility Class Reference}
+\label{class_d_e_model_1_1_psi_incompressibility}\index{DEModel::PsiIncompressibility@{DEModel::PsiIncompressibility}}
+
+
+{\ttfamily \#include $<$demodel.\+h$>$}
+
+
+
+Inheritance diagram for D\+E\+Model\+::Psi\+Incompressibility\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_psi_incompressibility__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for D\+E\+Model\+::Psi\+Incompressibility\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_d_e_model_1_1_psi_incompressibility__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_e_model_1_1_psi_incompressibility_a6e91eba7c98c1146df69da31207e4922}{Psi\+Incompressibility}} (const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ argument\+\_\+set}, const \textbf{ C\+M\+F\+::\+Variable\+Set} \textbf{ parameter\+\_\+set})
+\item 
+bool \mbox{\hyperlink{class_d_e_model_1_1_psi_incompressibility_a5671c9336de69cffaed851b65f6d76f2}{compute}} (double \&value, Eigen\+::\+Vector\+Xd \&gradient, Eigen\+::\+Matrix\+Xd \&hessian, const bool update\+\_\+value, const bool update\+\_\+gradient, const bool update\+\_\+hessian) override final
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Implementation of the Lagrangian multiplier function for incompressibility $\rho_0 \Psi^\mathrm{inc} = p(1-J) $, where $p$ is the Lagrangian multiplier and $J$ the determniation of a deformation measure.
+
+Order of arguments\+:~\newline
+ \mbox{[}0\mbox{]} $p$~\newline
+ \mbox{[}1\mbox{]} $J$~\newline
+
+
+Order of parameters\+:~\newline
+ \mbox{[}0\mbox{]} $x_1$~\newline
+ \mbox{[}1\mbox{]} $x_2$~\newline
+ \mbox{[}2\mbox{]} $x_3$~\newline
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_incompressibility_a6e91eba7c98c1146df69da31207e4922}\label{class_d_e_model_1_1_psi_incompressibility_a6e91eba7c98c1146df69da31207e4922}} 
+\index{DEModel::PsiIncompressibility@{DEModel::PsiIncompressibility}!PsiIncompressibility@{PsiIncompressibility}}
+\index{PsiIncompressibility@{PsiIncompressibility}!DEModel::PsiIncompressibility@{DEModel::PsiIncompressibility}}
+\doxysubsubsection{\texorpdfstring{PsiIncompressibility()}{PsiIncompressibility()}}
+{\footnotesize\ttfamily D\+E\+Model\+::\+Psi\+Incompressibility\+::\+Psi\+Incompressibility (\begin{DoxyParamCaption}\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{argument\+\_\+set,  }\item[{const \textbf{ C\+M\+F\+::\+Variable\+Set}}]{parameter\+\_\+set }\end{DoxyParamCaption})}
+
+Constructor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em argument\+\_\+set} & The names of the arguments\\
+\hline
+\mbox{\texttt{ in}}  & {\em parameter\+\_\+set} & The names of the parameters \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_e_model_1_1_psi_incompressibility_a5671c9336de69cffaed851b65f6d76f2}\label{class_d_e_model_1_1_psi_incompressibility_a5671c9336de69cffaed851b65f6d76f2}} 
+\index{DEModel::PsiIncompressibility@{DEModel::PsiIncompressibility}!compute@{compute}}
+\index{compute@{compute}!DEModel::PsiIncompressibility@{DEModel::PsiIncompressibility}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily bool D\+E\+Model\+::\+Psi\+Incompressibility\+::compute (\begin{DoxyParamCaption}\item[{double \&}]{value,  }\item[{Eigen\+::\+Vector\+Xd \&}]{gradient,  }\item[{Eigen\+::\+Matrix\+Xd \&}]{hessian,  }\item[{const bool}]{update\+\_\+value,  }\item[{const bool}]{update\+\_\+gradient,  }\item[{const bool}]{update\+\_\+hessian }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [final]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+See \textbf{ C\+M\+F\+::\+Function\+::compute()} 
+
+Implements \textbf{ Function$<$ double, Eigen\+::\+Vector\+Xd, Eigen\+::\+Matrix\+Xd, Eigen\+::\+Vector\+Xd, Eigen\+::\+Vector\+Xd $>$}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/sst/code/demodel/include/demodel/\mbox{\hyperlink{demodel_8h}{demodel.\+h}}\end{DoxyCompactItemize}

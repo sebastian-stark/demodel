@@ -192,6 +192,48 @@ public:
 };
 
 /**
+ * Implementation of the Lagrangian multiplier function for incompressibility \f$\rho_0 \Psi^\mathrm{inc} = p(1-J) \f$,
+ * where \f$p\f$ is the Lagrangian multiplier and \f$J\f$ the determniation of a deformation measure.
+ *
+ * Order of arguments:<br>	[0]	 \f$p\f$<br>
+ * 							[1]	 \f$J\f$<br>
+ *
+ * Order of parameters:<br>	[0]	 \f$x_1\f$<br>
+ * 							[1]	 \f$x_2\f$<br>
+ * 							[2]	 \f$x_3\f$<br>
+ */
+class PsiIncompressibility : public CMF::ScalarFunction<double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd>
+{
+
+public:
+
+	/**
+	 * Constructor.
+	 *
+	 * @param[in]	argument_set	The names of the arguments
+	 *
+	 * @param[in]	parameter_set	The names of the parameters
+	 *
+	 */
+	PsiIncompressibility(	const CMF::VariableSet	argument_set,
+							const CMF::VariableSet	parameter_set);
+
+	/**
+	 * See CMF::Function::compute()
+	 */
+	bool
+	compute(double&				value,
+			Eigen::VectorXd&	gradient,
+			Eigen::MatrixXd&	hessian,
+			const bool			update_value,
+			const bool			update_gradient,
+			const bool			update_hessian)
+	override
+	final;
+};
+
+
+/**
  * Implementation of the elastic surface free energy function \f$\rho_0 \Psi^\mathrm{surf} = \dfrac{1}{8} \lambda^\mathrm{S} ( C^\mathrm{S}_{kk} - 2)^2 + \dfrac{1}{4} \mu^\mathrm{S} ( C^\mathrm{S}_{ki}C^\mathrm{S}_{ik} - 2 C^\mathrm{S}_{kk} + 2) \f$,
  * where \f$C^\mathrm{S}_{kl} = F^\mathrm{S}_{ik} F^\mathrm{S}_{il}\f$, and \f$F^\mathrm{S}_{kl} = u^\mathrm{S}_{k,l} + \delta_{kl}- n_k n_l\f$. In the latter formula, \f$u^\mathrm{S}_{k,l}\f$ is the surface gradient of the vector field \f$u^\mathrm{S}_k\f$, which is defined on a surface.
  * Furthermore, \f$n_k\f$ is the outward normal vector on the surface.

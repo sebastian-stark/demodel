@@ -1,0 +1,30 @@
+******************
+* Checking dg_dq *
+******************
+Direct computation result:
+-2.0000e-01
+ 3.0000e-01
+
+Numeric computation result:
+-2.0000e-01
+ 3.0000e-01
+
+Relative errors:
+0.0000e+00
+0.0000e+00
+
+********************
+* Checking d2g_dq2 *
+********************
+Direct computation result:
+ 0.0000e+00 -1.0000e+00
+-1.0000e+00  0.0000e+00
+
+Numeric computation result:
+ 0.0000e+00 -1.0000e+00
+-1.0000e+00  0.0000e+00
+
+Relative errors:
+0.0000e+00 0.0000e+00
+0.0000e+00 0.0000e+00
+

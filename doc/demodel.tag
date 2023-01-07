@@ -12,6 +12,7 @@
     <class kind="class">DEModel::Transformationdi</class>
     <class kind="class">DEModel::PsiMech</class>
     <class kind="class">DEModel::PsiElec</class>
+    <class kind="class">DEModel::PsiIncompressibility</class>
     <class kind="class">DEModel::PsiSurf</class>
     <class kind="class">DEModel::DeltaEta</class>
     <namespace>DEModel</namespace>
@@ -66,6 +67,25 @@
       <anchorfile>class_d_e_model_1_1_psi_elec.html</anchorfile>
       <anchor>ab10414e5752c90209d33c284bba5ae17</anchor>
       <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>DEModel::PsiIncompressibility</name>
+    <filename>class_d_e_model_1_1_psi_incompressibility.html</filename>
+    <base>CMF::ScalarFunction&lt; double, Eigen::VectorXd, Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd &gt;</base>
+    <member kind="function">
+      <type></type>
+      <name>PsiIncompressibility</name>
+      <anchorfile>class_d_e_model_1_1_psi_incompressibility.html</anchorfile>
+      <anchor>a6e91eba7c98c1146df69da31207e4922</anchor>
+      <arglist>(const CMF::VariableSet argument_set, const CMF::VariableSet parameter_set)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>compute</name>
+      <anchorfile>class_d_e_model_1_1_psi_incompressibility.html</anchorfile>
+      <anchor>a5671c9336de69cffaed851b65f6d76f2</anchor>
+      <arglist>(double &amp;value, Eigen::VectorXd &amp;gradient, Eigen::MatrixXd &amp;hessian, const bool update_value, const bool update_gradient, const bool update_hessian) override final</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -158,6 +178,7 @@
     <filename>namespace_d_e_model.html</filename>
     <class kind="class">DEModel::DeltaEta</class>
     <class kind="class">DEModel::PsiElec</class>
+    <class kind="class">DEModel::PsiIncompressibility</class>
     <class kind="class">DEModel::PsiMech</class>
     <class kind="class">DEModel::PsiSurf</class>
     <class kind="class">DEModel::Transformationdi</class>
