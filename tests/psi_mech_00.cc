@@ -28,10 +28,10 @@ int main(int argc, char *argv[])
 	const double mu_i = 1.2;
 	const double mu_e = 1.5;
 
-	DEModel::PsiMech psi_mech({"F_11", "F_12", "F_13", "F_21", "F_22", "F_23", "F_31", "F_32", "F_33", "Ui_inv_11", "Ui_inv_22", "Ui_inv_33", "2*Ui_inv_12", "2*Ui_inv_23", "2*Ui_inv_31"}, {"x_1", "x_2", "x_3"}, mu_e, mu_i);
+	DEModel::PsiMech psi_mech({"F_11", "F_12", "F_13", "F_21", "F_22", "F_23", "F_31", "F_32", "F_33", "Ui_inv_11", "Ui_inv_22", "Ui_inv_33", "2*Ui_inv_12", "2*Ui_inv_23", "2*Ui_inv_31", "J"}, {"x_1", "x_2", "x_3"}, mu_e, mu_i);
 
-	Eigen::VectorXd arguments(15), parameters(3);
-	arguments << 0.14109, 0.58873, 0.33273, 0.16916, 0.78525, 0.39318, 0.79193, 0.63440, 0.552314, 0.552314, 0.495467, 0.808784, 0.404693, 0.029189, -0.177586;
+	Eigen::VectorXd arguments(16), parameters(3);
+	arguments << 7.919001680476220e-01, 4.354021247897929e-01, 7.258518419606522e-02, 2.536529913731666e-01, 9.357484950847669e-01, 1.187560501774511e-01, 4.061255583546320e-01, 2.959545035959460e-01, 8.658406739391875e-01, 0.552314, 0.495467, 0.808784, 0.404693, 0.029189, -0.177586, 5.170116338434780e-01;
 
 	psi_mech.set_arguments(arguments);
 	psi_mech.numeric_test_derivatives(1e-8, demodel_log);

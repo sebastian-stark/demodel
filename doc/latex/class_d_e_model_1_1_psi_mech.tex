@@ -40,7 +40,7 @@ const double \mbox{\hyperlink{class_d_e_model_1_1_psi_mech_a2d6d73f5d4a32dccf444
 
 
 \doxysubsection{Detailed Description}
-Implementation of the elastic free energy function $\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} F_{ij} F_{ij} + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} {U^\mathrm{i}}^{-1}_{mi} $, where ${U^\mathrm{i}}^{-1}_{kl}$ is symmetric, while $F_{kl}$ is unsymmetric, and $\mu^\mathrm{e}>0$ and $\mu^\mathrm{i}>0$ are material parameters.
+Implementation of the elastic free energy function $\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} [F_{ij} F_{ij} - 3 - 2 \ln(J) ] + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} {U^\mathrm{i}}^{-1}_{mi} $, where ${U^\mathrm{i}}^{-1}_{kl}$ is symmetric, while $F_{kl}$ is unsymmetric, $J$ is the determinant of $F_{kl}$, and $\mu^\mathrm{e}>0$ and $\mu^\mathrm{i}>0$ are material parameters.
 
 Order of arguments\+:~\newline
  \mbox{[}0\mbox{]} $F_{11}$~\newline
@@ -57,7 +57,8 @@ Order of arguments\+:~\newline
  \mbox{[}11\mbox{]} ${{U}^\mathrm{i}}^{-1}_{33}$~\newline
  \mbox{[}12\mbox{]} $2 {{U}^\mathrm{i}}^{-1}_{12}$~\newline
  \mbox{[}13\mbox{]} $2 {{U}^\mathrm{i}}^{-1}_{23}$~\newline
- \mbox{[}14\mbox{]} $2 {{U}^\mathrm{i}}^{-1}_{31}$
+ \mbox{[}14\mbox{]} $2 {{U}^\mathrm{i}}^{-1}_{31}$~\newline
+ \mbox{[}15\mbox{]} $J$
 
 Order of parameters\+:~\newline
  \mbox{[}0\mbox{]} $x_1$~\newline

@@ -56,8 +56,8 @@ public:
 };
 
 /**
- * Implementation of the elastic free energy function \f$\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} F_{ij} F_{ij} + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} {U^\mathrm{i}}^{-1}_{mi} \f$,
- * where \f${U^\mathrm{i}}^{-1}_{kl}\f$ is symmetric, while \f$F_{kl}\f$ is unsymmetric, and \f$\mu^\mathrm{e}>0\f$ and \f$\mu^\mathrm{i}>0\f$ are material parameters.
+ * Implementation of the elastic free energy function \f$\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} [F_{ij} F_{ij} - 3 - 2 \ln(J) ] + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} {U^\mathrm{i}}^{-1}_{mi} \f$,
+ * where \f${U^\mathrm{i}}^{-1}_{kl}\f$ is symmetric, while \f$F_{kl}\f$ is unsymmetric, \f$J\f$ is the determinant of \f$F_{kl}\f$, and \f$\mu^\mathrm{e}>0\f$ and \f$\mu^\mathrm{i}>0\f$ are material parameters.
  *
  * Order of arguments:<br>	[0]	 \f$F_{11}\f$<br>
  * 							[1]	 \f$F_{12}\f$<br>
@@ -73,7 +73,8 @@ public:
  * 							[11] \f${{U}^\mathrm{i}}^{-1}_{33}\f$<br>
  * 							[12] \f$2 {{U}^\mathrm{i}}^{-1}_{12}\f$<br>
  * 							[13] \f$2 {{U}^\mathrm{i}}^{-1}_{23}\f$<br>
- * 							[14] \f$2 {{U}^\mathrm{i}}^{-1}_{31}\f$
+ * 							[14] \f$2 {{U}^\mathrm{i}}^{-1}_{31}\f$<br>
+ * 							[15] \f$J\f$
  *
  * Order of parameters:<br>	[0]	 \f$x_1\f$<br>
  * 							[1]	 \f$x_2\f$<br>

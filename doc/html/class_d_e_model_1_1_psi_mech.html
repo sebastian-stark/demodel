@@ -175,7 +175,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a408758263057f977068606042eef7664 inherit pro_attribs_class_c_m_f_1_1_function"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implementation of the elastic free energy function <img class="formulaInl" alt="$\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} F_{ij} F_{ij} + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} {U^\mathrm{i}}^{-1}_{mi} $" src="form_33.png"/>, where <img class="formulaInl" alt="${U^\mathrm{i}}^{-1}_{kl}$" src="form_2.png"/> is symmetric, while <img class="formulaInl" alt="$F_{kl}$" src="form_3.png"/> is unsymmetric, and <img class="formulaInl" alt="$\mu^\mathrm{e}&gt;0$" src="form_14.png"/> and <img class="formulaInl" alt="$\mu^\mathrm{i}&gt;0$" src="form_15.png"/> are material parameters.</p>
+<div class="textblock"><p>Implementation of the elastic free energy function <img class="formulaInl" alt="$\rho_0 \Psi^\mathrm{mech} = \dfrac{\mu^\mathrm{e}}{2} [F_{ij} F_{ij} - 3 - 2 \ln(J) ] + \dfrac{\mu^\mathrm{i}}{2} {U^\mathrm{i}}^{-1}_{ik} F_{lk} F_{lm} {U^\mathrm{i}}^{-1}_{mi} $" src="form_97.png"/>, where <img class="formulaInl" alt="${U^\mathrm{i}}^{-1}_{kl}$" src="form_2.png"/> is symmetric, while <img class="formulaInl" alt="$F_{kl}$" src="form_3.png"/> is unsymmetric, <img class="formulaInl" alt="$J$" src="form_95.png"/> is the determinant of <img class="formulaInl" alt="$F_{kl}$" src="form_3.png"/>, and <img class="formulaInl" alt="$\mu^\mathrm{e}&gt;0$" src="form_14.png"/> and <img class="formulaInl" alt="$\mu^\mathrm{i}&gt;0$" src="form_15.png"/> are material parameters.</p>
 <p>Order of arguments:<br  />
  [0] <img class="formulaInl" alt="$F_{11}$" src="form_16.png"/><br  />
  [1] <img class="formulaInl" alt="$F_{12}$" src="form_17.png"/><br  />
@@ -191,7 +191,8 @@ Additional Inherited Members</h2></td></tr>
  [11] <img class="formulaInl" alt="${{U}^\mathrm{i}}^{-1}_{33}$" src="form_27.png"/><br  />
  [12] <img class="formulaInl" alt="$2 {{U}^\mathrm{i}}^{-1}_{12}$" src="form_28.png"/><br  />
  [13] <img class="formulaInl" alt="$2 {{U}^\mathrm{i}}^{-1}_{23}$" src="form_29.png"/><br  />
- [14] <img class="formulaInl" alt="$2 {{U}^\mathrm{i}}^{-1}_{31}$" src="form_30.png"/></p>
+ [14] <img class="formulaInl" alt="$2 {{U}^\mathrm{i}}^{-1}_{31}$" src="form_30.png"/><br  />
+ [15] <img class="formulaInl" alt="$J$" src="form_95.png"/></p>
 <p>Order of parameters:<br  />
  [0] <img class="formulaInl" alt="$x_1$" src="form_89.png"/><br  />
  [1] <img class="formulaInl" alt="$x_2$" src="form_90.png"/><br  />
